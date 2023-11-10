@@ -6,9 +6,9 @@ app = Flask(__name__, static_folder='static')
 def hello_world():
     return render_template('temp.html')
 
-@app.route("/login")
+@app.route("/inicio")
 def login():
-    return render_template('login.html')
+    return render_template('inicio.html')
 
 
 if __name__ == '__main__':
