@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, url_for, render_template
 
 app = Flask(__name__, static_folder='static')
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return render_template('temp.html')
+
 
 
 
