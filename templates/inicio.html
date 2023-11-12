@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../static/css/inicio.css">
+        <title>Página de inicio de sesión</title>
+    </head>
+    <body>
+        <div class="login-page">
+            <div class="form">
+                <h2>Bienvenido a 3vago!</h2>
+                {% if error %}
+                    <p>{{ error }}</p>
+                {% endif %}
+                <form class="login-form" action="{{ url_for('login') }}" method="post">
+                    <input type="text" name="email" placeholder="Usuario"/>
+                    <input type="password" name="password" placeholder="Contraseña"/>
+                    <button type="submit">Iniciar sesión</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
