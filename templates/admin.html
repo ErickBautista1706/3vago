@@ -35,9 +35,9 @@
   </div>
   <ul>
     <li>
-      <a href="#"><i class="fas fa-home"></i><span class="sidebar-text">Inicio</span></a>
+      <a href="#" class="home"><i class="fas fa-home"></i><span class="sidebar-text">Inicio</span></a>
     </li>
-    <li>
+    <li class="users">
       <a href="#"><i class="fas fa-user"></i><span class="sidebar-text">Usuarios</span></a>
     </li>
     <li>
@@ -55,213 +55,382 @@
   </ul>
 </div>
 
-<div class="content-adm">
-  <div class="row">
+<div  class="content-adm">
+  <div id="divInicio">
+    <div class="row">
       <div class="col">
         <h1>Dashboard general 3vago</h1>
       </div>
       <div class="col" style="text-align: right; margin-top:20px">
         <p>Bienvenido Administrador</p>
       </div>
+  
+  
+    </div>
+    
+    <br>
+
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card h-100">
+          <div class="card-header bg-light py-2">
+            <div class="row flex-between-center">
+              <div class="col-auto">
+                <h6 class="mb-0">Top Products</h6>
+              </div>
+              <div class="col-auto d-flex"><a class="btn btn-link btn-sm me-2" href="#!">View Details</a>
+                <div class="dropdown font-sans-serif btn-reveal-trigger">
+                  <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-top-products" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+                  <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-top-products"><a class a href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body h-100">
+            <div class="echart-bar-top-products h-100" data-echart-responsive="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+      <div class="col">
+        <div class="row g-3">
+          <div class="col-md-4 col-xxl-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row flex-between-center g-0">
+                  <div class="col-6 d-lg-block flex-between-center">
+                    <h6 class="mb-2 text-900">Active Users</h6>
+                    <h4 class="fs-3 fw-normal text-700 mb-0">765k</h4>
+                  </div>
+                  <div class="col-auto h-100">
+                    <div style="height:50px;min-width:80px;" data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-xxl-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row flex-between-center">
+                  <div class="col d-md-flex d-lg-block flex-between-center">
+                    <h6 class="mb-md-0 mb-lg-2">Revenue</h6><span class="badge rounded-pill badge-soft-success"><span class="fas fa-caret-up"></span> 61.8%</span>
+                  </div>
+                  <div class="col-auto">
+                    <h4 class="fs-3 fw-normal text-700" data-countup='{"endValue":82.18,"decimalPlaces":2,"suffix":"M","prefix":"$"}'>0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-xxl-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row flex-between-center">
+                  <div class="col d-md-flex d-lg-block flex-between-center">
+                    <h6 class="mb-md-0 mb-lg-2">Conversion</h6><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 29.4%</span>
+                  </div>
+                  <div class="col-auto">
+                    <h4 class="fs-3 fw-normal text-primary" data-countup='{"endValue":28.5,"decimalPlaces":2,"suffix":"%"}'>0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header d-flex flex-between-center bg-light py-2">
+            <h6 class="mb-0">Active Users</h6>
+            <div class="dropdown font-sans-serif btn-reveal-trigger">
+              <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-active-user" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-active-user"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body py-2">
+            <div class="d-flex align-items-center position-relative mb-3">
+              <div class="avatar avatar-2xl status-online">
+                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
+  
+              </div>
+              <div class="flex-1 ms-3">
+                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Emma Watson</a></h6>
+                <p class="text-500 fs--2 mb-0">Admin</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center position-relative mb-3">
+              <div class="avatar avatar-2xl status-online">
+                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
+  
+              </div>
+              <div class="flex-1 ms-3">
+                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Antony Hopkins</a></h6>
+                <p class="text-500 fs--2 mb-0">Moderator</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center position-relative mb-3">
+              <div class="avatar avatar-2xl status-away">
+                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
+  
+              </div>
+              <div class="flex-1 ms-3">
+                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Anna Karinina</a></h6>
+                <p class="text-500 fs--2 mb-0">Editor</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center position-relative mb-3">
+              <div class="avatar avatar-2xl status-offline">
+                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
+  
+              </div>
+              <div class="flex-1 ms-3">
+                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">John Lee</a></h6>
+                <p class="text-500 fs--2 mb-0">Admin</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-center position-relative false">
+              <div class="avatar avatar-2xl status-offline">
+                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
+  
+              </div>
+              <div class="flex-1 ms-3">
+                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Rowen Atkinson</a></h6>
+                <p class="text-500 fs--2 mb-0">Editor</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="app/social/followers.html">All active users<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
+        </div>
+      </div>
+  
+      <div class="col">
+        <div class="card h-100">
+          <div class="card-header bg-light d-flex flex-between-center py-2">
+            <h6 class="mb-0">Bandwidth Saved</h6>
+            <div class="dropdown font-sans-serif btn-reveal-trigger">
+              <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-bandwidth-saved" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
+              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-bandwidth-saved"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-center flex-column">
+            <!-- Find the JS file for the following chart at: src/js/charts/echarts/bandwidth-saved.js-->
+            <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
+            <div class="echart-bandwidth-saved" data-echart-responsive="true"></div>
+            <div class="text-center mt-3">
+              <h6 class="fs-0 mb-1"><span class="fas fa-check text-success me-1" data-fa-transform="shrink-2"></span>35.75 GB saved</h6>
+              <p class="fs--1 mb-0">38.44 GB total bandwidth</p>
+            </div>
+          </div>
+          <div class="card-footer bg-light py-2">
+            <div class="row flex-between-center">
+              <div class="col-auto">
+                <select class="form-select form-select-sm">
+                  <option>Last 6 Months</option>
+                  <option>Last Year</option>
+                  <option>Last 2 Year</option>
+                </select>
+              </div>
+              <div class="col-auto"><a class="fs--1 font-sans-serif" href="#!">Help</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+    </div>
+
+    <br><br>
+
+
+
+
   </div>
   
-  <br>
-  <div class="row">
+  <div id="divUsuarios" style="display: none">
+    <div class="row">
+      <div class="col">
+        <h1>3vago</h1>
+      </div>
+      <div class="col" style="text-align: right; margin-top:20px">
+        <p>Bienvenido Administrador</p>
+      </div>
+    </div>
+    <br>
+  
+    <div class="card">
+      <div class="card-header bg-light d-flex align-items-center justify-content-between">
+          <div style="margin-top: 10px;">
+              <h4>Usuarios</h4>
+          </div>
+          <div class="text-end">
+              <button class="btn btn-sm btn-falcon-default" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalAgregarUsuario">
+                  <i class="fas fa-plus"></i> Agregar
+              </button>
+          </div>
+      </div>
+  
+      <div class="card-body">
+          <div class="table-responsive scrollbar">
+              <table class="table table-hover table-striped overflow-hidden">
+                  <thead>
+                      <tr>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Alias</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Tipo de Usuario</th>
+                          <th class="text-end" scope="col">Acción</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for usuario in usuarios %}
+                      <tr class="align-middle">
+                          <td class="text-nowrap">
+                              <div class="d-flex align-items-center">
+                                  <div class="ms-2">{{ usuario.nombre }}</div>
+                              </div>
+                          </td>
+                          <td class="text-nowrap">{{ usuario.alias }}</td>
+                          <td class="text-nowrap">{{ usuario.email }}</td>
+                          <td class="text-nowrap">
+                              <span class="badge badge rounded-pill d-block p-2 {% if usuario.tipo_usr == 'Administrador' %}badge-soft-success{% else %}badge-soft-primary{% endif %}">
+                                  {{ usuario.tipo_usr }}
+                                  <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+                              </span>
+                          </td>
+                          <td class="text-end">
+                            <a class="btn actionDelete" title="Borrar" data-id="{{ usuario.id_usr }}">
+                              <i class="fas fa-trash"></i>
+                            </a>
+                            <a class="btn actionEdit" title="Editar" data-id="{{ usuario.id_usr }}">
+                              <i class="fas fa-edit"></i>
+                            </a>
+                          
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  
+  
     
-    <div class="col-12">
-      <div class="card h-100">
-        <div class="card-header bg-light py-2">
-          <div class="row flex-between-center">
-            <div class="col-auto">
-              <h6 class="mb-0">Top Products</h6>
-            </div>
-            <div class="col-auto d-flex"><a class="btn btn-link btn-sm me-2" href="#!">View Details</a>
-              <div class="dropdown font-sans-serif btn-reveal-trigger">
-                <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-top-products" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-top-products"><a class a href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                  <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body h-100">
-          <div class="echart-bar-top-products h-100" data-echart-responsive="true"></div>
-        </div>
-      </div>
-    </div>
+    
+
+
+
+    
+
+
+    
   </div>
 
-  <br><br>
+  
+  
+  
+  
 
-  <div class="row">
-    <div class="col">
-      <div class="row g-3">
-        <div class="col-md-4 col-xxl-12">
-          <div class="card h-100">
-            <div class="card-body">
-              <div class="row flex-between-center g-0">
-                <div class="col-6 d-lg-block flex-between-center">
-                  <h6 class="mb-2 text-900">Active Users</h6>
-                  <h4 class="fs-3 fw-normal text-700 mb-0">765k</h4>
-                </div>
-                <div class="col-auto h-100">
-                  <div style="height:50px;min-width:80px;" data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-xxl-12">
-          <div class="card h-100">
-            <div class="card-body">
-              <div class="row flex-between-center">
-                <div class="col d-md-flex d-lg-block flex-between-center">
-                  <h6 class="mb-md-0 mb-lg-2">Revenue</h6><span class="badge rounded-pill badge-soft-success"><span class="fas fa-caret-up"></span> 61.8%</span>
-                </div>
-                <div class="col-auto">
-                  <h4 class="fs-3 fw-normal text-700" data-countup='{"endValue":82.18,"decimalPlaces":2,"suffix":"M","prefix":"$"}'>0</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 col-xxl-12">
-          <div class="card h-100">
-            <div class="card-body">
-              <div class="row flex-between-center">
-                <div class="col d-md-flex d-lg-block flex-between-center">
-                  <h6 class="mb-md-0 mb-lg-2">Conversion</h6><span class="badge rounded-pill badge-soft-primary"><span class="fas fa-caret-up"></span> 29.4%</span>
-                </div>
-                <div class="col-auto">
-                  <h4 class="fs-3 fw-normal text-primary" data-countup='{"endValue":28.5,"decimalPlaces":2,"suffix":"%"}'>0</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+
+  
+  
+
+ 
+
+  
+</div>
+
+
+<!-- 
+  =================================================================
+  ==================   M O D A L E S   ============================
+  =================================================================
+
+-->
+<div class="modal fade bd-example-modal-lg" id="modalAgregarUsuario" tabindex="-1" aria-labelledby="modalAgregarUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAgregarUsuarioLabel">Agregar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div>
-  </div>
-  <br><br>
-
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-header d-flex flex-between-center bg-light py-2">
-          <h6 class="mb-0">Active Users</h6>
-          <div class="dropdown font-sans-serif btn-reveal-trigger">
-            <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-active-user" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-            <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-active-user"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-              <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('agregar_usuario') }}" class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre del usuario" name="nombre">
+            </div>
+            <div class="mb-3">
+              <label for="apellidoP" class="form-label">Apellido Paterno</label>
+              <input type="text" class="form-control" id="apellidoP" placeholder="Apellido paterno del usuario" name="apellidoP">
+            </div>
+            <div class="mb-3">
+              <label for="apellidoM" class="form-label">Apellido Materno</label>
+              <input type="text" class="form-control" id="apellidoM" placeholder="Apellido materno del usuario" name="apellidoM">
+            </div>
+            <div class="mb-3">
+              <label for="alias" class="form-label">Alias</label>
+              <input type="text" class="form-control" id="alias" placeholder="Alias del usuario" name="alias">
             </div>
           </div>
-        </div>
-        <div class="card-body py-2">
-          <div class="d-flex align-items-center position-relative mb-3">
-            <div class="avatar avatar-2xl status-online">
-              <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Email del usuario" name="email">
             </div>
-            <div class="flex-1 ms-3">
-              <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Emma Watson</a></h6>
-              <p class="text-500 fs--2 mb-0">Admin</p>
+            <div class="mb-3">
+              <label for="psw" class="form-label">Contraseña</label>
+              <input type="text" class="form-control" id="psw" placeholder="Contraseña del usuario" name="psw">
             </div>
-          </div>
-          <div class="d-flex align-items-center position-relative mb-3">
-            <div class="avatar avatar-2xl status-online">
-              <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-            </div>
-            <div class="flex-1 ms-3">
-              <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Antony Hopkins</a></h6>
-              <p class="text-500 fs--2 mb-0">Moderator</p>
-            </div>
-          </div>
-          <div class="d-flex align-items-center position-relative mb-3">
-            <div class="avatar avatar-2xl status-away">
-              <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-            </div>
-            <div class="flex-1 ms-3">
-              <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Anna Karinina</a></h6>
-              <p class="text-500 fs--2 mb-0">Editor</p>
-            </div>
-          </div>
-          <div class="d-flex align-items-center position-relative mb-3">
-            <div class="avatar avatar-2xl status-offline">
-              <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-            </div>
-            <div class="flex-1 ms-3">
-              <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">John Lee</a></h6>
-              <p class="text-500 fs--2 mb-0">Admin</p>
-            </div>
-          </div>
-          <div class="d-flex align-items-center position-relative false">
-            <div class="avatar avatar-2xl status-offline">
-              <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-            </div>
-            <div class="flex-1 ms-3">
-              <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Rowen Atkinson</a></h6>
-              <p class="text-500 fs--2 mb-0">Editor</p>
-            </div>
-          </div>
-        </div>
-        <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2" href="app/social/followers.html">All active users<span class="fas fa-chevron-right ms-1 fs--2"></span></a></div>
-      </div>
-    </div>
-
-    <div class="col">
-      <div class="card h-100">
-        <div class="card-header bg-light d-flex flex-between-center py-2">
-          <h6 class="mb-0">Bandwidth Saved</h6>
-          <div class="dropdown font-sans-serif btn-reveal-trigger">
-            <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-bandwidth-saved" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-            <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-bandwidth-saved"><a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-              <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body d-flex flex-center flex-column">
-          <!-- Find the JS file for the following chart at: src/js/charts/echarts/bandwidth-saved.js-->
-          <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-          <div class="echart-bandwidth-saved" data-echart-responsive="true"></div>
-          <div class="text-center mt-3">
-            <h6 class="fs-0 mb-1"><span class="fas fa-check text-success me-1" data-fa-transform="shrink-2"></span>35.75 GB saved</h6>
-            <p class="fs--1 mb-0">38.44 GB total bandwidth</p>
-          </div>
-        </div>
-        <div class="card-footer bg-light py-2">
-          <div class="row flex-between-center">
-            <div class="col-auto">
-              <select class="form-select form-select-sm">
-                <option>Last 6 Months</option>
-                <option>Last Year</option>
-                <option>Last 2 Year</option>
+            <div class="mb-3">
+              <label for="tipoUsuario" class="form-label">Tipo de Usuario</label>
+              <select class="form-select" id="tipoUsuario" name="tipoUsuario">
+                <option value="1">Administrador</option>
+                <option value="2">Supervisor</option>
               </select>
             </div>
-            <div class="col-auto"><a class="fs--1 font-sans-serif" href="#!">Help</a></div>
           </div>
-        </div>
       </div>
-    </div>
-
-
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="agregar_usuario">Guardar</button>
+      </div>
+    </form>
   </div>
-
-  <br>
-  <br>
-
 </div>
 
 
 
-  
-  
+
+
+
+<!-- 
+  =================================================================
+  ==================     HDDFIELD       ============================
+  =================================================================
+
+-->
     
-</div>
+<input type="hidden" id="usuario_id" value="">
 
 
 {% endblock %}
