@@ -417,6 +417,62 @@
     </form>
   </div>
 </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="modalActualizarUsuario" tabindex="-1" aria-labelledby="modalActualizarUsuarioLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalActualizarUsuarioLabel">Actualizar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ url_for('actualizar_usuario') }}" class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre_act" name="nombre">
+            </div>
+            <div class="mb-3">
+              <label for="apellidoP" class="form-label">Apellido Paterno</label>
+              <input type="text" class="form-control" id="apellidoP_act" name="apellidoP">
+            </div>
+            <div class="mb-3">
+              <label for="apellidoM" class="form-label">Apellido Materno</label>
+              <input type="text" class="form-control" id="apellidoM_act" name="apellidoM">
+            </div>
+            <div class="mb-3">
+              <label for="alias" class="form-label">Alias</label>
+              <input type="text" class="form-control" id="alias_act" name="alias">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email_act" name="email" disabled> 
+            </div>
+            <div class="mb-3">
+              <label for="psw" class="form-label">Contraseña</label>
+              <input type="text" class="form-control" id="psw_act" name="psw" disabled>
+            </div>
+            <div class="mb-3">
+              <label for="tipoUsuario" class="form-label">Tipo de Usuario</label>
+              <select class="form-select" id="tipoUsuario_act" name="tipoUsuario" disabled>
+                <option value="1">Administrador</option>
+                <option value="2">Supervisor</option>
+              </select>
+            </div>
+            <input type="hidden" id="id_usr_act" name="id_usr">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary" name="actualizar_usuario">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 
 

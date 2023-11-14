@@ -52,7 +52,32 @@ def eliminar_usuario(id_usuario):
         return jsonify({'success': True})
     else:
         return jsonify({'success': False})
+    
+@app.route('/get_usuario_info/<int:id_usuario>', methods=['GET'])
+def obtener_usuario_info(id_usuario):
+    datos_usuario = Admin.get_usuario_info(id_usuario)
+    print(datos_usuario)
+    return jsonify({'success': True, 'usuario': datos_usuario})
 
+@app.route('/actualizar_usuario', methods=['POST'])
+def actualizar_usuario():
+    if request.method == "POST":
+        id_usr = request.form.get("id_usr")
+        nombre = request.form.get("nombre")
+        apellidoP = request.form.get("apellidoP")
+        apellidoM = request.form.get("apellidoM")
+        alias = request.form.get("alias")
+        tipoUsuario = request.form.get("tipoUsuario")
+        print("ID a actualizar: ", id_usr)
+        
+        resultado = Admin.actualizar_usuario(id_usr,nombre, apellidoP, apellidoM, alias)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar el usuario."
+    else:
+        return redirect(url_for("admin"))
 
 
 if __name__ == '__main__':
