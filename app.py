@@ -20,10 +20,14 @@ def login():
             return redirect(url_for('admin'))
     return render_template('inicio.html', error=error)
 
-
 @app.route("/admin")
 def admin():
     return Admin.mostrar_usuarios()
+
+@app.route('/gerente')
+def mostrar_gerente():
+    return render_template('gerente.html')
+
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -45,7 +49,6 @@ def agregar_usuario():
     else:
         return redirect(url_for("admin"))
     
-
 @app.route('/eliminar_usuario/<int:id_usuario>', methods=['GET'])
 def eliminar_usuario(id_usuario):
     if Admin.eliminar_usuario(id_usuario):

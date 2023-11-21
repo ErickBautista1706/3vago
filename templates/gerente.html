@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %} Gerente {% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+<header class="p-5 m-5 pb-0">
+    <h1 class="text-center">Administración de reservaciones</h1>
+</header>
+
+<article class="p-5 m-5">
+
+    <section class="row">
+
+        <div class="col-8">
+            <h2 class="text-center pb-3"> Cabañas </h2>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>Zona</th>
+                            <th>Id Cabaña</th>
+                            <th>Cabaña</th>
+                            <th>Estado</th>
+                            <th>Modificar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Zona asdasdas</td>
+                            <td>Dato 2</td>
+                            <td>Dato 3</td>
+                            <td>Dato 4</td>
+                            <td>
+                                
+                                    <button type="button" class="btn btn-success">Reservar</button>
+                                    <button type="button" class="btn btn-danger">Desocupar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-4">
+
+            <h2 class="text-center pb-3"> Información </h2>
+
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="table-success">
+                                <th>Num. Total de Cabañas</th>
+                                <th>Num. Cabañas Ocupadas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Dato 1</td>
+                                <td>Dato 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h2 class="text-center pb-3"> Calendario </h2>
+
+            <div class="row">
+                <form action="/procesar_formulario" method="post" style="display: flex;">
+                    <label for="fecha"><p>Buscar fechas:</p></label>
+                    <input class="form-control" type="date" id="fecha" name="fecha" required style="width: 10rem;">                    
+                    <input class="btn btn-outline-primary" type="submit" value="Enviar">
+                </form>
+            </div>
+
+        </div>
+
+    </section>
+
+</article>
+
+{% endblock %}
