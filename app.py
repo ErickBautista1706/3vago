@@ -1,6 +1,8 @@
 from flask import Flask, url_for, render_template, request, redirect, jsonify
 from models.login import Login
 from models.adm import Admin
+from datetime import datetime
+
 
 app = Flask(__name__, static_folder='static')
 
@@ -23,7 +25,10 @@ def login():
 
 @app.route("/admin")
 def admin():
-    return Admin.mostrar_usuarios()
+    usuarios = Admin.obtener_usuarios()
+    zonas = Admin.obtener_zonas() 
+
+    return render_template('admin.html', usuarios=usuarios, zonas=zonas)
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -67,7 +72,6 @@ def actualizar_usuario():
         apellidoP = request.form.get("apellidoP")
         apellidoM = request.form.get("apellidoM")
         alias = request.form.get("alias")
-        tipoUsuario = request.form.get("tipoUsuario")
         print("ID a actualizar: ", id_usr)
         
         resultado = Admin.actualizar_usuario(id_usr,nombre, apellidoP, apellidoM, alias)
@@ -78,6 +82,12 @@ def actualizar_usuario():
             return "Hubo un error al agregar el usuario."
     else:
         return redirect(url_for("admin"))
+
+
+def formatear_fecha_hora(dt):
+    
+    formato = "%Y-%m-%d %H:%M:%S"
+    return dt.strftime(formato) if dt else None
 
 
 if __name__ == '__main__':

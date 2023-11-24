@@ -3,11 +3,10 @@ from models.database import Database  # Importa la clase Database desde models/d
 from sqlalchemy import text
 
 class Admin:
-    def mostrar_usuarios():
-        db = Database()
-
-        conn = db.engine.connect()
-        query = text("""
+    def obtener_usuarios():
+            db = Database()
+            conn = db.engine.connect()
+            query = text("""
                 SELECT u.id_usr, 
                     u.nombre || ' ' || u.apellidoP || ' ' || u.apellidoM AS nombre,
                     u.alias,
@@ -17,13 +16,10 @@ class Admin:
                 JOIN tipo_usuario t ON u.id_tuser = t.id_tpurs
                 """)
 
-        result = conn.execute(query)
-
-        usuarios = result.fetchall()
-        conn.close()
-
-        # Renderiza una plantilla HTML con los datos 
-        return render_template('admin.html', usuarios=usuarios)
+            result = conn.execute(query)
+            usuarios = result.fetchall()
+            conn.close()
+            return usuarios
 
     def insertar_usuario(nombre, apellidoP, apellidoM, alias, email, psw, tipoUsuario):
         try:
@@ -134,5 +130,18 @@ class Admin:
             # Si ocurre un error, se captura y se devuelve False
             print(f"Error al actualizar usuario: {e}")
             return False
+    
+    def obtener_zonas():
+            db = Database()
+            conn = db.engine.connect()
+            query = text("""
+                SELECT *
+                FROM zonas
+                """)
 
+            result = conn.execute(query)
+            zonas = result.fetchall()
+            conn.close()
+            return zonas
+                
         
