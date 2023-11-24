@@ -135,8 +135,9 @@ class Admin:
             db = Database()
             conn = db.engine.connect()
             query = text("""
-                SELECT *
-                FROM zonas
+                SELECT z.*, u.nombre
+                FROM zonas z
+                INNER JOIN usuarios u ON z.id_usr = u.id_usr
                 """)
 
             result = conn.execute(query)

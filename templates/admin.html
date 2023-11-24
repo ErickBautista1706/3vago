@@ -371,11 +371,10 @@
           <table class="table table-hover table-striped overflow-hidden">
             <thead>
               <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Ubicación</th>
                 <th scope="col">Activo</th>
-                <th scope="col">ID Usuario</th>
+                <th scope="col">Nombre Usuario</th>
                 <th scope="col">Fecha de Actualización</th>
                 <th class="text-end" scope="col">Acciones</th>
               </tr>
@@ -383,7 +382,6 @@
             <tbody>
               {% for zona in zonas %}
                 <tr class="align-middle">
-                  <td class="text-nowrap">{{ zona.id_zn }}</td>
                   <td class="text-nowrap">{{ zona.nombre_zn }}</td>
                   <td class="text-nowrap">{{ zona.ubicacion_zn }}</td>
                   <td class="text-nowrap">
@@ -392,9 +390,9 @@
                     {% else %}
                       <span class="badge badge rounded-pill d-block p-2 badge-soft-secondary">Inactivo<span class="ms-1 fas fa-times" data-fa-transform="shrink-2"></span></span>
                     {% endif %}
-                  </td>
-                  <td class="text-nowrap">{{ zona.id_usr }}</td>
-                  <td class="text-nowrap">{{ zona.update_zn }}</td>
+                  </td>                  
+                  <td class="text-nowrap">{{ zona.nombre }}</td>
+                  <td class="text-nowrap">{{ zona.uptade_zn }}</td>
                   <td class="text-end">
                     <!-- Botones de acciones aquí -->
                   </td>
