@@ -40,7 +40,7 @@
     <li class="users">
       <a href="#"><i class="fas fa-user"></i><span class="sidebar-text">Usuarios</span></a>
     </li>
-    <li>
+    <li class="zone">
       <a href="#"><i class="fas fa-earth-americas"></i><span class="sidebar-text">Zonas</span></a>
     </li>
     <li>
@@ -330,6 +330,8 @@
           </div>
       </div>
   </div>
+
+  
   
   
     
@@ -343,9 +345,67 @@
     
   </div>
 
-  
-  
-  
+  <div id="divZona" style="display: none;">
+    <div class="row">
+      <div class="col">
+        <h1>3vago</h1>
+      </div>
+      <div class="col" style="text-align: right; margin-top:20px">
+        <p>Bienvenido Administrador</p>
+      </div>
+    </div>
+    <div class="row g-0">
+      <div class="card">
+        
+        <div class="card-header bg-light d-flex align-items-center justify-content-between">
+          <div style="margin-top: 10px;">
+              <h4>Usuarios</h4>
+          </div>
+          <div class="text-end">
+              <button class="btn btn-sm btn-falcon-default" title="Agregar" data-bs-toggle="modal" data-bs-target="#modalAgregarUsuario">
+                  <i class="fas fa-plus"></i> Agregar
+              </button>
+          </div>
+      </div>
+        <div class="card-body">
+          <table class="table table-hover table-striped overflow-hidden">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Activo</th>
+                <th scope="col">Nombre Usuario</th>
+                <th scope="col">Fecha de Actualización</th>
+                <th class="text-end" scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for zona in zonas %}
+                <tr class="align-middle">
+                  <td class="text-nowrap">{{ zona.nombre_zn }}</td>
+                  <td class="text-nowrap">{{ zona.ubicacion_zn }}</td>
+                  <td class="text-nowrap">
+                    {% if zona.activo_zn %}
+                      <span class="badge badge rounded-pill d-block p-2 badge-soft-success">Activo<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span></span>
+                    {% else %}
+                      <span class="badge badge rounded-pill d-block p-2 badge-soft-secondary">Inactivo<span class="ms-1 fas fa-times" data-fa-transform="shrink-2"></span></span>
+                    {% endif %}
+                  </td>                  
+                  <td class="text-nowrap">{{ zona.nombre }}</td>
+                  <td class="text-nowrap">{{ zona.uptade_zn }}</td>
+                  <td class="text-end">
+                    <!-- Botones de acciones aquí -->
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
+    </div> 
+</div>
+
   
 
 

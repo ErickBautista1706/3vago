@@ -1,4 +1,6 @@
+
 $(document).ready(function() {
+    
     console.log("Hora de chambear :p");
 
     $(".home").click(function(){
@@ -8,6 +10,11 @@ $(document).ready(function() {
     $(".users").click(function(){
         mostrarUsers();
     });
+
+    $(".zone").click(function(){
+        mostrarZona();
+    });
+
 
     $(".actionEdit").click(function() {
         var id = $(this).data("id");
@@ -50,16 +57,30 @@ $(document).ready(function() {
 function mostrarDash(){
     var divInico = document.getElementById("divInicio");
     var divUsers = document.getElementById("divUsuarios");
+    var divZonas = document.getElementById("divZona");
     divInico.style.display = 'block';
     divUsers.style.display = 'none';
+    divZonas.style.display = 'none';
 
 }
 
 function mostrarUsers(){
     var divInico = document.getElementById("divInicio");
     var divUsers = document.getElementById("divUsuarios");
+    var divZonas = document.getElementById("divZona");
     divInico.style.display = 'none';
     divUsers.style.display = 'block';
+    divZonas.style.display = 'none';
+}
+
+function mostrarZona(){
+    var divInico = document.getElementById("divInicio");
+    var divUsers = document.getElementById("divUsuarios");
+    var divZonas = document.getElementById("divZona");
+    divInico.style.display = 'none';
+    divUsers.style.display = 'none';
+    divZonas.style.display = 'block';
+
 }
 
 
