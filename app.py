@@ -2,13 +2,20 @@ from flask import Flask, url_for, render_template, request, redirect, jsonify
 from models.login import Login
 from models.adm import Admin
 from datetime import datetime
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask import Flask, session
 
 
 app = Flask(__name__, static_folder='static')
 
+
+app.secret_key = 'saranbabiche'  
+
 @app.route("/")
 def hello_world():
     return render_template('temp.html')
+
+from flask_jwt_extended import create_access_token
 
 @app.route('/inicio', methods=['GET', 'POST'])
 def login():
@@ -19,20 +26,26 @@ def login():
         if not Login.check_login(email, password):
             error = 'Error: Email o contraseña incorrectos'
         else:
+            session['usuario_logueado'] = email  # Guardar el email del usuario en la sesión
             return redirect(url_for('admin'))
     return render_template('inicio.html', error=error)
 
+
 @app.route("/admin")
 def admin():
-    usuarios = Admin.obtener_usuarios()
-    zonas = Admin.obtener_zonas() 
+    if 'usuario_logueado' not in session:
+        return redirect(url_for('login'))  # Redirige al inicio de sesión si no está autenticado
 
+    usuarios = Admin.obtener_usuarios()
+    zonas = Admin.obtener_zonas()
     return render_template('admin.html', usuarios=usuarios, zonas=zonas)
 
 @app.route('/gerente')
 def mostrar_gerente():
-    return render_template('gerente.html')
+    if 'usuario_logueado' not in session:
+        return redirect(url_for('login'))  # Redirige al inicio de sesión si no está autenticado
 
+    return render_template('gerente.html')
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -85,6 +98,12 @@ def actualizar_usuario():
             return "Hubo un error al agregar el usuario."
     else:
         return redirect(url_for("admin"))
+    
+@app.route('/logout')
+def logout():
+    session.pop('usuario_logueado', None)  # Elimina el usuario de la sesión
+    return redirect(url_for('login'))      # Redirige a la página de inicio de sesión
+
 
 
 def formatear_fecha_hora(dt):
