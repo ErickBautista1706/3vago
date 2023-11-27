@@ -20,14 +20,25 @@ from flask_jwt_extended import create_access_token
 @app.route('/inicio', methods=['GET', 'POST'])
 def login():
     error = None
+    email = None  # Se deben inicializar estas variables eh
+
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        if not Login.check_login(email, password):
+
+        auth_success, tipo_usuario = Login.check_login(email, password)
+        print("Autenticación exitosa:", auth_success, "Tipo de Usuario:", tipo_usuario)
+
+        if not auth_success:
             error = 'Error: Email o contraseña incorrectos'
         else:
-            session['usuario_logueado'] = email  # Guardar el email del usuario en la sesión
-            return redirect(url_for('admin'))
+            session['usuario_logueado'] = email 
+            if tipo_usuario == 'Administrador':
+                return redirect(url_for('admin'))
+            elif tipo_usuario == 'Supervisor':
+                return redirect(url_for('mostrar_gerente'))
+
+    # Si  autenticación falla, muestra la página de inicio de sesión
     return render_template('inicio.html', error=error)
 
 

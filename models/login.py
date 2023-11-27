@@ -5,28 +5,29 @@ from models.database import Database
 class Login:
     def check_login(email, password):
         try:
-            # Crear una instancia de la clase Database
             db = Database()
-
-            # Obtener el motor de SQLAlchemy de la instancia de la clase Database
             conn = db.engine.connect()
 
-            # Crear un objeto de comando
-            cmd = text("SELECT * FROM usuarios WHERE email = :email AND psw = :password")
+           
+            cmd = text("""
+                SELECT u.id_usr, u.email, t.tipo_usr
+                FROM usuarios u
+                JOIN tipo_usuario t ON u.id_tuser = t.id_tpurs
+                WHERE u.email = :email AND u.psw = :password
+            """)
 
-            # Ejecutar la consulta
             result = conn.execute(cmd, {'email': email, 'password': password})
-
-            # Procesar los resultados
             user = result.fetchone()
-
-            # Cerrar la conexión
+            
+            
             conn.close()
 
             if user:
-                return True
+                # Devuelve True y el tipo de usuario
+                return True, user.tipo_usr  
             else:
-                return False
+                return False, None
 
         except OperationalError as e:
             print(f"Error de base de datos: {e}")
+            return False, None
