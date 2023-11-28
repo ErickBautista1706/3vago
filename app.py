@@ -44,6 +44,9 @@ def login():
     # Si  autenticación falla, muestra la página de inicio de sesión
     return render_template('inicio.html', error=error)
 
+@app.route('/inicio2')
+def inicio2():
+    return render_template('login2.html')
 
 @app.route("/admin")
 def admin():
