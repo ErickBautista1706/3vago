@@ -23,7 +23,6 @@ from flask_jwt_extended import create_access_token
 @app.route('/inicio', methods=['GET', 'POST'])
 def login():
     error = None
-    email = None  # Se deben inicializar estas variables eh
 
     if request.method == 'POST':
         email = request.form['email']
@@ -35,23 +34,21 @@ def login():
         if not auth_success:
             error = 'Error: Email o contraseña incorrectos'
         else:
-            session['usuario_logueado'] = email 
+            session['usuario_logueado'] = email
+            session['tipo_usuario'] = tipo_usuario  # Guardar tipo de usuario en la sesión
             if tipo_usuario == 'Administrador':
                 return redirect(url_for('admin'))
             elif tipo_usuario == 'Supervisor':
                 return redirect(url_for('mostrar_gerente'))
 
-    # Si  autenticación falla, muestra la página de inicio de sesión
-    return render_template('inicio.html', error=error)
+    return render_template('login2.html', error=error)
 
-@app.route('/inicio2')
-def inicio2():
-    return render_template('login2.html')
 
 @app.route("/admin")
 def admin():
-    if 'usuario_logueado' not in session:
-        return redirect(url_for('login'))  # Redirige al inicio de sesión si no está autenticado
+    # Verifica si el usuario está logueado y si es Administrador
+    if 'usuario_logueado' not in session or session.get('tipo_usuario') != 'Administrador':
+        return redirect(url_for('login'))
 
     users_info = GetInfos.llenar_combo_users_zona()
     usuarios = Admin.obtener_usuarios()
@@ -60,10 +57,12 @@ def admin():
 
 @app.route('/gerente')
 def mostrar_gerente():
-    if 'usuario_logueado' not in session:
-        return redirect(url_for('login'))  # Redirige al inicio de sesión si no está autenticado
+    # Verifica si el usuario está logueado y si es Supervisor
+    if 'usuario_logueado' not in session or session.get('tipo_usuario') != 'Supervisor':
+        return redirect(url_for('login'))
 
     return render_template('gerente.html')
+
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
