@@ -19,8 +19,6 @@ $(document).ready(function() {
     $(".actionEdit").click(function() {
         var id = $(this).data("id");
         get_data_user(id)
-    
-        
     });
      
 
@@ -42,6 +40,31 @@ $(document).ready(function() {
         });
     });
     
+    $(".del-zone").click(function(){
+        var id = $(this).data("id");
+        console.log("Obtuve el id:", id);
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminar_zona(id);
+            }
+        });
+    });
+
+    
+
+
+    $(".edit-zone").click(function() {
+        var id = $(this).data("id");
+        get_data_zona(id);
+    });
    
     
       
@@ -134,4 +157,53 @@ function get_data_user(id){
     });
 }
 
+function eliminar_zona(id){
+    $.ajax({
+        url: "/eliminar_zona/" + id,
+        type: "GET",
+        success: function(response) {
+            if (response.success) {
+                
+                console.log("Zona eliminada exitosamente.");
+            } else {
+                console.error("Error al eliminar una zona.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
 
+
+function get_data_zona(id) {
+    $.ajax({
+        url: "/get_zona_info/" + id,
+        type: "GET",
+        success: function(response) {
+            console.log("Respuesta completa del servidor:", response);
+
+            if (response.success) {
+                var datos_zona = response.zona;
+                $("#id_zn_act").val(datos_zona[0]);
+                $("#nombreZona_act").val(datos_zona[1]);
+                $("#ubicacionZona_act").val(datos_zona[2]);
+
+                var selectAct = datos_zona[3].toString();
+                $("#activoZona_act").val(selectAct);  // No es necesario convertir a minúsculas
+
+                
+
+                $("#selectUsuario_act").val(datos_zona[4]);
+
+                $("#modalActualizarZona").modal("show");
+
+            } else {
+                console.error("Error al obtener información de la zona.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
