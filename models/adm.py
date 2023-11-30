@@ -73,7 +73,6 @@ class Admin:
                 print(f"Error al eliminar usuario: {e}")
                 return False
             
-
     def actualizar_usuario(id_usuario, nombre, apellidoP, apellidoM, alias):
         try:
             # Conectar a la base de datos
@@ -199,3 +198,46 @@ class Admin:
             # Si ocurre un error, se captura y se devuelve False
             print(f"Error al actualizar zona: {e}")
             return False
+
+    #--------Cabañas----------#
+    def obtener_cabanas():
+            db = Database()
+            conn = db.engine.connect()
+            query = text("""
+                SELECT id_cbn, no_cbn, capacidad_cbn
+                FROM cabanas 
+                """)
+
+            result = conn.execute(query)
+            cabanas = result.fetchall()
+            conn.close()
+            return cabanas
+    
+    def num_cabanas():
+        db = Database()
+        conn = db.engine.connect()
+        query = text("""
+            SELECT COUNT(*) FROM cabanas 
+            """)
+        result = conn.execute(query)
+        numcabanas = result.fetchone()[0]
+        conn.close()
+        return numcabanas
+    
+    #--------Calenadarios----------#
+    '''
+    def obtener_calendarios():
+            db = Database()
+            conn = db.engine.connect()
+            query = text("""
+                SELECT fechas.id_fh, fechas.dia, fechas.hora, cabanas.no_cbn
+                FROM fechas
+                JOIN cabanas ON fechas.id_cbn = cabanas.id_cbn;
+                """)
+
+            result = conn.execute(query)
+            fechas = result.fetchall()
+            conn.close()
+            return fechas
+    '''
+    

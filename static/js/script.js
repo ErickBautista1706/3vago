@@ -15,6 +15,10 @@ $(document).ready(function() {
         mostrarZona();
     });
 
+    $(".gerente").click(function(){
+        mostrarGerente();
+    })
+
 
     $(".actionEdit").click(function() {
         var id = $(this).data("id");
@@ -81,29 +85,44 @@ function mostrarDash(){
     var divInico = document.getElementById("divInicio");
     var divUsers = document.getElementById("divUsuarios");
     var divZonas = document.getElementById("divZona");
+    var divGerente = document.getElementById("divGerente");
     divInico.style.display = 'block';
     divUsers.style.display = 'none';
     divZonas.style.display = 'none';
-
+    divGerente.style.display = 'none';
 }
 
 function mostrarUsers(){
     var divInico = document.getElementById("divInicio");
     var divUsers = document.getElementById("divUsuarios");
     var divZonas = document.getElementById("divZona");
+    var divGerente = document.getElementById("divGerente");
     divInico.style.display = 'none';
     divUsers.style.display = 'block';
     divZonas.style.display = 'none';
+    divGerente.style.display = 'none';
 }
 
 function mostrarZona(){
     var divInico = document.getElementById("divInicio");
     var divUsers = document.getElementById("divUsuarios");
     var divZonas = document.getElementById("divZona");
+    var divGerente = document.getElementById("divGerente");
     divInico.style.display = 'none';
     divUsers.style.display = 'none';
     divZonas.style.display = 'block';
+    divGerente.style.display = 'none';
+}
 
+function mostrarGerente(){
+    var divInico = document.getElementById("divInicio");
+    var divUsers = document.getElementById("divUsuarios");
+    var divZonas = document.getElementById("divZona");
+    var divGerente = document.getElementById("divGerente");
+    divInico.style.display = 'none';
+    divUsers.style.display = 'none';
+    divZonas.style.display = 'none';
+    divGerente.style.display = 'block';
 }
 
 

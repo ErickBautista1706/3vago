@@ -12,6 +12,37 @@
     <h1 class="text-center">Administración de reservaciones</h1>
 </header>
 
+<article>
+    <div class="side-adm">
+        <div class="sidebar-header">
+            <h5>Menú</h5>
+        </div>
+        <ul>
+            <li>
+                <a href="#" class="home"><i class="fas fa-home"></i><span class="sidebar-text">Inicio</span></a>
+            </li>
+            <li class="users">
+                <a href="#"><i class="fas fa-user"></i><span class="sidebar-text">Usuarios</span></a>
+            </li>
+            <li class="zone">
+                <a href="#"><i class="fas fa-earth-americas"></i><span class="sidebar-text">Zonas</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-house"></i><span class="sidebar-text">Cabañas</span></a>
+            </li>
+            <li>
+                <a href="{{ url_for('generar_reporte') }}"><i class="fas fa-print"></i><span
+                        class="sidebar-text">Imprimir Reporte</span></a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}"><i class="fas fa-right-from-bracket"></i><span
+                        class="sidebar-text">Cerrar Sesión</span></a>
+            </li>
+
+        </ul>
+    </div>
+</article>
+
 <article class="p-5 m-5">
 
     <section class="row">
@@ -21,26 +52,25 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr class="table-primary">
-                            <th>Zona</th>
+                        <tr class="table-primary">                            
                             <th>Id Cabaña</th>
                             <th>Cabaña</th>
-                            <th>Estado</th>
+                            <th>Capacidad</th>
                             <th>Modificar</th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                         <tr>
                             <td>Zona asdasdas</td>
                             <td>Dato 2</td>
                             <td>Dato 3</td>
-                            <td>Dato 4</td>
                             <td>
-                                
-                                    <button type="button" class="btn btn-success">Reservar</button>
-                                    <button type="button" class="btn btn-danger">Desocupar</button>
+                                <button type="button" class="btn btn-warning">Modificar</button>
+                                <button type="button" class="btn btn-danger">Eliminar</button>                                
                             </td>
                         </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -73,8 +103,10 @@
 
             <div class="row">
                 <form action="/procesar_formulario" method="post" style="display: flex;">
-                    <label for="fecha"><p>Buscar fechas:</p></label>
-                    <input class="form-control" type="date" id="fecha" name="fecha" required style="width: 10rem;">                    
+                    <label for="fecha">
+                        <p>Buscar fechas:</p>
+                    </label>
+                    <input class="form-control" type="date" id="fecha" name="fecha" required style="width: 10rem;">
                     <input class="btn btn-outline-primary" type="submit" value="Enviar">
                 </form>
             </div>

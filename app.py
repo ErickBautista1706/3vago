@@ -53,16 +53,10 @@ def admin():
     users_info = GetInfos.llenar_combo_users_zona()
     usuarios = Admin.obtener_usuarios()
     zonas = Admin.obtener_zonas()
-    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info)
-
-@app.route('/gerente')
-def mostrar_gerente():
-    # Verifica si el usuario está logueado y si es Supervisor
-    if 'usuario_logueado' not in session or session.get('tipo_usuario') != 'Supervisor':
-        return redirect(url_for('login'))
-
-    return render_template('gerente.html')
-
+    cabanas = Admin.obtener_cabanas()
+    numcabanas = Admin.num_cabanas()
+    #fechas = Admin.obtener_calendarios()
+    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, numcabanas=numcabanas)
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
