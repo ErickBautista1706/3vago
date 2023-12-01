@@ -135,6 +135,35 @@ class Admin:
         except Exception as e:
             print(f"Error al eliminar zona: {e}")
             return False
+    
+    def insertar_zona(nombre_zn, ubicacion_zn, activo_zn, id_usr):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Insertar la nueva zona en la base de datos
+            query = text("""
+                INSERT INTO zonas (nombre_zn, ubicacion_zn, activo_zn, id_usr, uptade_zn)
+                VALUES (:nombre_zn, :ubicacion_zn, :activo_zn, :id_usr, :update_time)
+            """)
+
+            conn.execute(query, {
+                'nombre_zn': nombre_zn,
+                'ubicacion_zn': ubicacion_zn,
+                'activo_zn': activo_zn,
+                'id_usr': id_usr,
+                'update_time': datetime.now()
+            })
+
+            conn.commit()
+            conn.close()
+
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al insertar zona: {e}")
+            return False
         
     def actualizar_zona(id_zn, nombre_zn, ubicacion_zn, activo_zn, id_usr):
         try:
