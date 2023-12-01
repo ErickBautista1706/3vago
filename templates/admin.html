@@ -456,6 +456,7 @@
                     <tr>
                       <th>Id</th>
                       <th>Cabaña</th>
+                      <th>Ubicación</th>
                       <th>Capacidad</th>
                       <th class="text-end" scope="col">Acción</th>
                     </tr>
@@ -468,13 +469,14 @@
                           <div class="ms-2">{{ cabana.id_cbn }}</div>
                         </div>
                       </td>
-                      <td class="text-nowrap">Cabaña {{ cabana.no_cbn }}</td>
+                      <td class="text-nowrap">{{ cabana.no_cbn }}</td>
+                      <td class="text-nowrap">{{ cabana.ubicacion_cbn }}</td>
                       <td class="text-nowrap">{{ cabana.capacidad_cbn }}</td>
                       <td class="text-end">
-                        <a class="btn actionDelete" title="Borrar" data-id="{{ cabana.id_cbn }}">
+                        <a class="btn " title="Borrar" data-id="{{ cabana.id_cbn }}">
                           <i class="fas fa-trash"></i>
                         </a>
-                        <a class="btn actionEdit" title="Editar" data-id="{{ cabana.id_cbn }}">
+                        <a class="btn edit-cabana" title="Editar" data-id="{{ cabana.id_cbn }}">
                           <i class="fas fa-edit"></i>
                         </a>
 
@@ -542,7 +544,26 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
+                    {% for calendario in fechas %}
+                    <tr class="align-middle">
+                      <td class="text-nowrap">
+                        <div class="d-flex align-items-center">
+                          <div class="ms-2">{{ calendario.id_fh }}</div>
+                        </div>
+                      </td>
+                      <td class="text-nowrap">{{ calendario.dia_disp }}</td>
+                      <td class="text-nowrap">{{ calendario.no_cbn }}</td>
+                      <td class="text-end">
+                        <a class="btn actionDelete" title="Borrar" data-id="{{ calendario.id_fh }}">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                        <a class="btn actionEdit" title="Editar" data-id="{{ calendario.id_fh }}">
+                          <i class="fas fa-edit"></i>
+                        </a>
+
+                      </td>
+                    </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
@@ -555,16 +576,6 @@
 
     </article>
   </div> <!-- end div cabana -->
-
-
-
-
-
-
-
-
-
-
 
 </div> <!-- end content-adm -->
 
@@ -794,16 +805,79 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Formulario para agregar zona -->
-        <form method="POST" action=" ">
+        <!-- Formulario para agregar cabana -->
+        <form method="POST" action="{{ url_for('agregar_cabana') }}">
           <div class="mb-3">
-            <label for="NoCabana" class="form-label">Numero</label>
-            <input type="number" class="form-control" id="NoCabana" name="NoCabana" required>
+            <label for="NoCabana" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="NoCabana" name="NoCabana" required>
+          </div>
+          <div class="mb-3">
+            <label for="bcnCabana" class="form-label">Ubicación</label>
+            <input type="text" class="form-control" id="bcnCabana" name="bcnCabana" required>
           </div>
           <div class="mb-3">
             <label for="CpdCabana" class="form-label">Capacidad</label>
             <input type="number" class="form-control" id="CpdCabana" name="CpdCabana" required>
           </div>
+
+          <div class="mb-3">
+            <label for="selectZonaCbn" class="form-label">Zona</label>
+            <select class="form-select" id="selectZonaCbn" name="selectZonaCbn">
+              {% for zona in zonas %}
+              <option value="{{ zona.id_zn }}">{{ zona.nombre_zn }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Actualizar cabana -->
+<div class="modal fade " id="modalModCabana" tabindex="-1" aria-labelledby="modalModCabanaLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalModCabanaLabel">Modificar Cabaña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para agregar cabana -->
+        <form method="POST" action="{{ url_for('modificar_cabana') }}">
+
+          <input type="hidden" id="id_cbn_act" name="id_cbn_act">
+
+          <div class="mb-3">
+            <label for="ActNoCabana" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="ActNoCabana" name="ActNoCabana" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="ActbcnCabana" class="form-label">Ubicación</label>
+            <input type="text" class="form-control" id="ActbcnCabana" name="ActbcnCabana" required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="ActCpdCabana" class="form-label">Capacidad</label>
+            <input type="number" class="form-control" id="ActCpdCabana" name="ActCpdCabana" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="ActselectZonaCbn" class="form-label">Zona</label>
+            <select class="form-select" id="ActselectZonaCbn" name="ActselectZonaCbn">
+              {% for zona in zonas %}
+              <option value="{{ zona.id_zn }}">{{ zona.nombre_zn }}</option>
+              {% endfor %}
+            </select>
+          </div>          
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
@@ -824,18 +898,27 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Formulario para agregar zona -->
-        <form method="POST" action=" ">
+        <!-- Formulario para agregar fecha -->
+        <form method="POST" action="{{ url_for('agregar_fecha') }}">
           <div class="mb-3">
             <label for="lblfecha" class="form-label">Fecha</label>
             <input type="date" class="form-control" id="lblfecha" name="lblfecha" required>
           </div>
+
           <div class="mb-3">
-            <label for="lblCabana" class="form-label">Cabaña</label>
-            <select class="form-control" id="lblCabana" name="lblCabana" required>
-              <option value=" ">Cabaña </option>
+            <label for="lblHora" class="form-label">Hora</label>
+            <input type="time" class="form-control" id="lblHora" name="lblHora" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="selectfcCbn" class="form-label">Zona</label>
+            <select class="form-select" id="selectfcCbn" name="selectfcCbn">
+              {% for cabana in cabanas %}
+              <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
+              {% endfor %}
             </select>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
@@ -845,6 +928,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 

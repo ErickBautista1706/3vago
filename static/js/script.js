@@ -19,13 +19,11 @@ $(document).ready(function() {
         mostrarGerente();
     })
 
-
     $(".actionEdit").click(function() {
         var id = $(this).data("id");
         get_data_user(id)
     });
      
-
     $(".actionDelete").click(function() {
         var id = $(this).data("id");
         console.log("Obtuve el id:", id);
@@ -62,22 +60,16 @@ $(document).ready(function() {
         });
     });
 
-    
-
-
     $(".edit-zone").click(function() {
         var id = $(this).data("id");
         get_data_zona(id);
     });
+
+    $(".edit-cabana").click(function() {
+        var id = $(this).data("id");
+        get_data_cabana(id);
+    });
    
-    
-      
-    
-    
-
-
-
-
 });
 
 
@@ -124,7 +116,6 @@ function mostrarGerente(){
     divZonas.style.display = 'none';
     divGerente.style.display = 'block';
 }
-
 
 function eliminarUsuario(id) {
     $.ajax({
@@ -194,7 +185,6 @@ function eliminar_zona(id){
     });
 }
 
-
 function get_data_zona(id) {
     $.ajax({
         url: "/get_zona_info/" + id,
@@ -219,6 +209,34 @@ function get_data_zona(id) {
 
             } else {
                 console.error("Error al obtener información de la zona.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
+
+//Cabañas
+function get_data_cabana(id){
+    $.ajax({
+        url: "/get_cabana_info/" + id,
+        type: "GET",
+        success: function(response) {
+            console.log("Respuesta completa del servidor:", response);
+
+            if (response.success) {
+                var datos_cabana = response.cabana;
+                $("#id_cbn_act").val(datos_cabana[0]);
+                $("#ActNoCabana").val(datos_cabana[1]);
+                $("#ActbcnCabana").val(datos_cabana[2]);
+                $("#ActCpdCabana").val(datos_cabana[3]);                
+
+                // Mostrar el modal de actualización
+                $("#modalModCabana").modal("show");
+
+            } else {
+                console.error("Error al obtener información de la cabaña.");
             }
         },
         error: function(error) {

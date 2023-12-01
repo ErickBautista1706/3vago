@@ -1,7 +1,6 @@
 from models.database import Database  
 from sqlalchemy import text
 
-
 class GetInfos:
     def llenar_combo_users_zona():
         try:
@@ -80,4 +79,28 @@ class GetInfos:
         except Exception as e:
             return [f"Error al obtener información de la zona por ID: {e}"]
     
-    
+    def obtener_info_cabana(id_cabana):
+        try:
+            db = Database()
+            conn = db.engine.connect()
+
+            query = text("""
+                SELECT id_cbn, no_cbn, ubicacion_cbn, capacidad_cbn, id_zn
+                FROM cabanas
+                WHERE id_cbn = :id_cabana
+            """)
+
+            result = conn.execute(query, {'id_cabana': id_cabana})
+            zona = result.fetchone()
+
+            conn.close()
+
+            if zona:
+                datos_zona = list(zona)
+            else:
+                datos_zona = ["Zona no encontrada"]
+
+            return datos_zona
+
+        except Exception as e:
+            return [f"Error al obtener información de la zona por ID: {e}"]

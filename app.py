@@ -55,8 +55,8 @@ def admin():
     zonas = Admin.obtener_zonas()
     cabanas = Admin.obtener_cabanas()
     numcabanas = Admin.num_cabanas()
-    #fechas = Admin.obtener_calendarios()
-    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, numcabanas=numcabanas)
+    fechas = Admin.obtener_calendarios()
+    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, numcabanas=numcabanas, fechas=fechas)
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -196,9 +196,64 @@ def generar_reporte():
     except Exception as e:
         return f"Error al generar el reporte: {e}"
 
+#Cabañas
+@app.route("/agregar_cabana", methods=["POST"])
+def agregar_cabana():
+    if request.method == "POST":
+        nombre_cabana = request.form.get("NoCabana")
+        ubicacion_cabana = request.form.get("bcnCabana")
+        capacidad_cabana = request.form.get("CpdCabana")
+        id_zn_cabana = request.form.get("selectZonaCbn")
 
+        resultado = Admin.insertar_cabana(nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
 
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
 
+@app.route('/get_cabana_info/<int:id_cabana>', methods=['GET'])
+def obtener_cabana_info(id_cabana):
+    datos_cabana = GetInfos.obtener_info_cabana(id_cabana)
+    print(datos_cabana)
+    return jsonify({'success': True, 'cabana': datos_cabana})
+
+@app.route("/modificar_cabana", methods=["POST"])
+def modificar_cabana():
+    if request.method == "POST":
+        id_cbn = request.form.get("id_cbn_act")
+        nombre_cabana = request.form.get("ActNoCabana")
+        ubicacion_cabana = request.form.get("ActbcnCabana")
+        capacidad_cabana = request.form.get("ActCpdCabana")
+        id_zn_cabana = request.form.get("ActselectZonaCbn")
+
+        resultado = Admin.actualizar_cabana(id_cbn, nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
+
+#Fechas
+@app.route("/agregar_fecha", methods=["POST"])
+def agregar_fecha():
+    if request.method == "POST":
+        dia = request.form.get("lblfecha")
+        hora = request.form.get("lblHora")
+        id_fc_cabana = request.form.get("selectfcCbn")
+
+        resultado = Admin.insertar_fecha(dia, hora, id_fc_cabana)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
 
 
 
