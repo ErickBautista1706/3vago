@@ -1,5 +1,5 @@
 from flask import Flask, url_for, render_template, request, redirect, jsonify, request, send_file, make_response
-from models.hilos import AgregarUsuarioThread
+from models.hilos import ActualizarCabanaThread, ActualizarUsuarioThread, ActualizarZonaThread, AgregarCabanaThread, AgregarUsuarioThread, AgregarZonaThread
 from models.login import Login
 from models.adm import Admin
 from datetime import datetime
@@ -89,6 +89,7 @@ def agregar_usuario():
     
 @app.route('/eliminar_usuario/<int:id_usuario>', methods=['GET'])
 def eliminar_usuario(id_usuario):
+    
     if Admin.eliminar_usuario(id_usuario):
         return jsonify({'success': True})
     else:
@@ -110,12 +111,16 @@ def actualizar_usuario():
         alias = request.form.get("alias")
         print("ID a actualizar: ", id_usr)
         
-        resultado = Admin.actualizar_usuario(id_usr,nombre, apellidoP, apellidoM, alias)
+        with lock:
+            hilo = ActualizarUsuarioThread(id_usr, nombre, apellidoP, apellidoM, alias)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.actualizar_usuario(id_usr,nombre, apellidoP, apellidoM, alias)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar el usuario."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar el usuario."
     else:
         return redirect(url_for("admin"))
     
@@ -133,12 +138,16 @@ def agregar_zona():
         activo_zona = request.form.get("activoZona") == "true"
         id_usr_supervisor = request.form.get("selectUsuario")
 
-        resultado = Admin.insertar_zona(nombre_zona, ubicacion_zona, activo_zona, id_usr_supervisor)
+        with lock:
+            hilo = AgregarZonaThread(nombre_zona, ubicacion_zona, activo_zona, id_usr_supervisor)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.insertar_zona(nombre_zona, ubicacion_zona, activo_zona, id_usr_supervisor)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -161,14 +170,18 @@ def actualizar_zona():
         nombre_zn = request.form.get("nombreZona_act")
         ubicacion_zn = request.form.get("ubicacionZona_act")
         activo_zn = request.form.get("activoZona_act")
-        id_usr = request.form.get("selectUsuario_act") 
-        resultado = Admin.actualizar_zona(id_zn, nombre_zn, ubicacion_zn, activo_zn, id_usr)
+        id_usr = request.form.get("selectUsuario_act")         
 
-        if resultado:
-            print(id_zn)
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al actualizar la zona."
+        with lock:
+            hilo = ActualizarZonaThread(id_zn, nombre_zn, ubicacion_zn, activo_zn, id_usr)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.actualizar_zona(id_zn, nombre_zn, ubicacion_zn, activo_zn, id_usr)
+            if not hilo.is_alive():
+                print(id_zn)
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al actualizar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -214,12 +227,16 @@ def agregar_cabana():
         capacidad_cabana = request.form.get("CpdCabana")
         id_zn_cabana = request.form.get("selectZonaCbn")
 
-        resultado = Admin.insertar_cabana(nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
+        with lock:
+            hilo = AgregarCabanaThread(nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.insertar_cabana(nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -238,12 +255,16 @@ def modificar_cabana():
         capacidad_cabana = request.form.get("ActCpdCabana")
         id_zn_cabana = request.form.get("ActselectZonaCbn")
 
-        resultado = Admin.actualizar_cabana(id_cbn, nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
+        with lock:
+            hilo = ActualizarCabanaThread(id_cbn, nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.actualizar_cabana(id_cbn, nombre_cabana, ubicacion_cabana, capacidad_cabana, id_zn_cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
