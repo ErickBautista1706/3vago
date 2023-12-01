@@ -24,6 +24,7 @@
 <script src="/static/dash/dash-js/chart.min.js"></script>
 <script src="/static/dash/dash-js/countUp.umd.js"></script>
 <script src="/static/dash/dash-js/dayjs.min.js"></script>
+<script src="/static/js/dashboard.js"></script>
 
 {% endblock %}
 
@@ -76,31 +77,38 @@
 
     <div class="row">
       <div class="col-12">
-        <div class="card h-100">
-          <div class="card-header bg-light py-2">
-            <div class="row flex-between-center">
-              <div class="col-auto">
-                <h6 class="mb-0">Top Products</h6>
-              </div>
-              <div class="col-auto d-flex"><a class="btn btn-link btn-sm me-2" href="#!">View Details</a>
-                <div class="dropdown font-sans-serif btn-reveal-trigger">
-                  <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal"
-                    type="button" id="dropdown-top-products" data-bs-toggle="dropdown" data-boundary="viewport"
-                    aria-haspopup="true" aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-                  <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-top-products"><a
-                      class a href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+         <div class="card">
+            <div class="card-header">
+               <div class="row flex-between-center">
+                  <div class="col-auto">
+                     <h6 class="mb-0">Reservations Chart</h6>
                   </div>
-                </div>
-              </div>
+                  <div class="col-auto d-flex">
+                     <select id="select-month" class="form-select form-select-sm select-month me-2">
+                        <option value="1">Enero</option>
+                        <option value="2">Febrero</option>
+                        <option value="3">Marzo</option>
+                        <option value="4">Abril</option>
+                        <option value="5">Mayo</option>
+                        <option value="6">Junio</option>
+                        <option value="7">Julio</option>
+                        <option value="8">Agosto</option>
+                        <option value="9">Septiembre</option>
+                        <option value="10">Octubre</option>
+                        <option value="11">Noviembre</option>
+                        <option value="12">Diciembre</option>
+                     </select>
+                     <button id="update-chart" class="btn btn-primary btn-sm" onclick="obtenerDatosYActualizarGrafico()">Update Chart</button>
+                  </div>
+               </div>
             </div>
-          </div>
-          <div class="card-body h-100">
-            <div class="echart-bar-top-products h-100" data-echart-responsive="true"></div>
-          </div>
-        </div>
+            <div class="card-body">
+              <canvas class="max-w-100" id="chartjs-line-chart"></canvas>
+            </div>
+         </div>
       </div>
-    </div>
+   </div>
+   
 
     <br><br>
 
@@ -109,37 +117,42 @@
         <div class="row g-3">
           <div class="col-md-4 col-xxl-12">
             <div class="card h-100">
-              <div class="card-body">
-                <div class="row flex-between-center g-0">
-                  <div class="col-6 d-lg-block flex-between-center">
-                    <h6 class="mb-2 text-900">Active Users</h6>
-                    <h4 class="fs-3 fw-normal text-700 mb-0">765k</h4>
-                  </div>
-                  <div class="col-auto h-100">
-                    <div style="height:50px;min-width:80px;"
-                      data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'>
+                <div class="card-body">
+                    <div class="row flex-between-center g-0">
+                        <div class="col-6 d-lg-block flex-between-center">
+                            <h6 class="mb-2 text-900">Total usuarios</h6>
+                            <h4 class="fs-3 fw-normal text-700 mb-0">{{ num_usuarios }}</h4>
+                        </div>
+                        <div class="col-auto h-100">
+                            <div style="height:50px;min-width:80px;"
+                                data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="col-md-4 col-xxl-12">
-            <div class="card h-100">
+        </div>        
+        <div class="col-md-4 col-xxl-12">
+          <div class="card h-100">
               <div class="card-body">
-                <div class="row flex-between-center">
-                  <div class="col d-md-flex d-lg-block flex-between-center">
-                    <h6 class="mb-md-0 mb-lg-2">Revenue</h6><span class="badge rounded-pill badge-soft-success"><span
-                        class="fas fa-caret-up"></span> 61.8%</span>
+                  <div class="row flex-between-center">
+                      <div class="col d-md-flex d-lg-block flex-between-center">
+                          <h6 class="mb-md-0 mb-lg-2">Total Cabañas</h6>
+                          <span class="badge rounded-pill badge-soft-success"><span
+                                  class="fas fa-caret-up"></span> {{ porcentaje }}%</span>
+                      </div>
+                      <div class="col-auto">
+                          <h4 class="fs-3 fw-normal text-700"
+                              data-countup='{"endValue":{{ total_cabanas }}, "decimalPlaces":0, "suffix":"", "prefix":""}'>
+                              
+                          </h4>
+                      </div>
                   </div>
-                  <div class="col-auto">
-                    <h4 class="fs-3 fw-normal text-700"
-                      data-countup='{"endValue":82.18,"decimalPlaces":2,"suffix":"M","prefix":"$"}'>0</h4>
-                  </div>
-                </div>
               </div>
-            </div>
           </div>
+      </div>
+      
+      
           <div class="col-md-4 col-xxl-12">
             <div class="card h-100">
               <div class="card-body">
@@ -165,75 +178,55 @@
     <div class="row">
       <div class="col">
         <div class="card">
-          <div class="card-header d-flex flex-between-center bg-light py-2">
-            <h6 class="mb-0">Active Users</h6>
-            <div class="dropdown font-sans-serif btn-reveal-trigger">
-              <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button"
-                id="dropdown-active-user" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true"
-                aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-active-user"><a
-                  class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-              </div>
+            <div class="card-header d-flex flex-between-center  py-2">
+                <h6 class="mb-0">Usurios en red</h6>
             </div>
-          </div>
-          <div class="card-body py-2">
-            <div class="d-flex align-items-center position-relative mb-3">
-              <div class="avatar avatar-2xl status-online">
-                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-              </div>
-              <div class="flex-1 ms-3">
-                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Emma Watson</a></h6>
-                <p class="text-500 fs--2 mb-0">Admin</p>
-              </div>
+            <div class="card-body py-2" id="tableExample" data-list='{"valueNames":["name","email","rol"],"page":5,"pagination":true}'>
+                <div class="table-responsive scrollbar">
+                    <table class="table table-bordered table-striped fs--1 mb-0">
+                        <thead class="bg-200 text-900">
+                            <tr>
+                                <th class="sort" data-sort="name">Nombre</th>
+                                <th class="sort" data-sort="email">Email</th>
+                                <th class="sort" data-sort="rol">Rol</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                          {% for usuario in usuarios %}
+                          <tr>
+                              <td class="name">{{ usuario.nombre }}</td>
+                              <td class="email">{{ usuario.email }}</td>
+                              <td class="rol">
+                                <span
+                                  class="badge badge rounded-pill d-block p-2 {% if usuario.tipo_usr == 'Administrador' %}badge-soft-success{% else %}badge-soft-primary{% endif %}">
+                                  {{ usuario.tipo_usr }}
+                                  <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+                                </span>
+                              </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row align-items-center mt-3">
+                    <div class="pagination d-none"></div>
+                    <div class="col">
+                        <p class="mb-0 fs--1">
+                            <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
+                            <span class="d-none d-sm-inline-block"> &mdash; </span>
+                            <a class="fw-semi-bold" href="#!" data-list-view="*">Ver más<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            <a class="fw-semi-bold d-none" href="#!" data-list-view="less">Ver menos<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                        </p>
+                    </div>
+                    <div class="col-auto d-flex">
+                        <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Anterior</span></button>
+                        <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Siguiente</span></button>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex align-items-center position-relative mb-3">
-              <div class="avatar avatar-2xl status-online">
-                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-              </div>
-              <div class="flex-1 ms-3">
-                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Antony Hopkins</a></h6>
-                <p class="text-500 fs--2 mb-0">Moderator</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center position-relative mb-3">
-              <div class="avatar avatar-2xl status-away">
-                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-              </div>
-              <div class="flex-1 ms-3">
-                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Anna Karinina</a></h6>
-                <p class="text-500 fs--2 mb-0">Editor</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center position-relative mb-3">
-              <div class="avatar avatar-2xl status-offline">
-                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-              </div>
-              <div class="flex-1 ms-3">
-                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">John Lee</a></h6>
-                <p class="text-500 fs--2 mb-0">Admin</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center position-relative false">
-              <div class="avatar avatar-2xl status-offline">
-                <img class="rounded-circle" src="../static/img/user_temp.png" alt="" />
-
-              </div>
-              <div class="flex-1 ms-3">
-                <h6 class="mb-0 fw-semi-bold"><a class="stretched-link text-900">Rowen Atkinson</a></h6>
-                <p class="text-500 fs--2 mb-0">Editor</p>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer bg-light p-0"><a class="btn btn-sm btn-link d-block w-100 py-2"
-              href="app/social/followers.html">All active users<span class="fas fa-chevron-right ms-1 fs--2"></span></a>
-          </div>
         </div>
-      </div>
+    </div>
+    
 
       <div class="col">
         <div class="card h-100">
