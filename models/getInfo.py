@@ -104,3 +104,5 @@ class GetInfos:
 
         except Exception as e:
             return [f"Error al obtener información de la zona por ID: {e}"]
+        
+    

@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 from flask import Flask, session
 from models.getInfo import GetInfos
 from models.llenarReport import LlenarReporte
+from models.dashboard import Dash
 import shutil
 import threading
 
@@ -59,7 +60,14 @@ def admin():
     cabanas = Admin.obtener_cabanas()
     numcabanas = Admin.num_cabanas()
     fechas = Admin.obtener_calendarios()
-    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, numcabanas=numcabanas, fechas=fechas)
+    num_usuarios = Dash.contar_usuarios()
+    total_cabanas = Dash.obtener_total_cabanas()
+    porcentaje = Dash.calcular_porcentaje(total_cabanas, 40)
+
+    
+    return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, 
+                           numcabanas=numcabanas, fechas=fechas, num_usuarios = num_usuarios, 
+                           total_cabanas=total_cabanas, porcentaje=porcentaje)
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -284,6 +292,16 @@ def agregar_fecha():
             return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
+
+
+
+@app.route('/reservations_chart/<int:month>')
+def reservations_chart(month):
+    # Supongamos que tienes una función para obtener las reservaciones para un mes específico
+    reservations_data = Dash.obtener_fechas(month)
+
+    # Devuelve los datos como un objeto JSON
+    return jsonify(reservations_data)
 
 
 
