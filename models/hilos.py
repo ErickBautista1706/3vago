@@ -29,7 +29,7 @@ class ActualizarUsuarioThread(threading.Thread):
         
 class AgregarZonaThread(threading.Thread):
     def __init__(self, nombre_zona, ubicacion_zona, activo_zona, id_usr_supervisor):
-        super(AgregarUsuarioThread, self).__init__()
+        super(AgregarZonaThread, self).__init__()
         self.nombre_zona = nombre_zona
         self.ubicacion_zona = ubicacion_zona
         self.activo_zona = activo_zona
@@ -40,7 +40,7 @@ class AgregarZonaThread(threading.Thread):
         
 class ActualizarZonaThread(threading.Thread):
     def __init__(self, id_zn, nombre_zn, ubicacion_zn, activo_zn, id_usr):
-        super(AgregarUsuarioThread, self).__init__()
+        super(ActualizarZonaThread, self).__init__()
         self.id_zn = id_zn
         self.nombre_zn = nombre_zn
         self.ubicacion_zn = ubicacion_zn
