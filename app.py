@@ -1,4 +1,5 @@
 from flask import Flask, url_for, render_template, request, redirect, jsonify, request, send_file, make_response
+from models.hilos import AgregarUsuarioThread
 from models.login import Login
 from models.adm import Admin
 from datetime import datetime
@@ -7,12 +8,14 @@ from flask import Flask, session
 from models.getInfo import GetInfos
 from models.llenarReport import LlenarReporte
 import shutil
+import threading
 
+lock = threading.Lock()
 
 app = Flask(__name__, static_folder='static')
 
 
-app.secret_key = 'saranbabiche'  
+app.secret_key = 'saranbabiche'
 
 @app.route("/")
 def hello_world():
@@ -39,7 +42,7 @@ def login():
             if tipo_usuario == 'Administrador':
                 return redirect(url_for('admin'))
             elif tipo_usuario == 'Supervisor':
-                return redirect(url_for('mostrar_gerente'))
+                return redirect(url_for('generar_reporte')) #No va
 
     return render_template('login2.html', error=error)
 
@@ -68,13 +71,19 @@ def agregar_usuario():
         email = request.form.get("email")
         psw = request.form.get("psw")
         tipoUsuario = request.form.get("tipoUsuario")
-        
-        resultado = Admin.insertar_usuario(nombre, apellidoP, apellidoM, alias, email, psw, tipoUsuario)
-
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar el usuario."
+       
+        with lock:            
+            hilo = AgregarUsuarioThread(nombre, apellidoP, apellidoM, alias, email, psw, tipoUsuario)
+            hilo.start()
+            hilo.join()
+            
+            #resultado = Admin.insertar_usuario(nombre, apellidoP, apellidoM, alias, email, psw, tipoUsuario)
+            
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar el usuario."
+            
     else:
         return redirect(url_for("admin"))
     
@@ -263,7 +272,8 @@ def formatear_fecha_hora(dt):
 
 
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
