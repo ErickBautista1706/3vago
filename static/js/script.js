@@ -69,6 +69,11 @@ $(document).ready(function() {
         var id = $(this).data("id");
         get_data_cabana(id);
     });
+
+    $(".edit-calendario").click(function() {
+        var id = $(this).data("id");
+        get_data_calendario(id);
+    });
    
 });
 
@@ -234,6 +239,32 @@ function get_data_cabana(id){
 
                 // Mostrar el modal de actualización
                 $("#modalModCabana").modal("show");
+
+            } else {
+                console.error("Error al obtener información de la cabaña.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
+
+//Calendario
+function get_data_calendario(id){
+    $.ajax({
+        url: "/get_fecha_info/" + id,
+        type: "GET",
+        success: function(response) {
+            console.log("Respuesta completa del servidor:", response);
+
+            if (response.success) {
+                var datos_cabana = response.fecha;
+                $("#id_fc_act").val(datos_cabana[0]);
+                $("#ActselectfcCbn").val(datos_cabana[1]);                
+
+                // Mostrar el modal de actualización
+                $("#modalActCalendario").modal("show");
 
             } else {
                 console.error("Error al obtener información de la cabaña.");

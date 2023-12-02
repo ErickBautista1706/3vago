@@ -550,7 +550,7 @@
                         <a class="btn actionDelete" title="Borrar" data-id="{{ calendario.id_fh }}">
                           <i class="fas fa-trash"></i>
                         </a>
-                        <a class="btn actionEdit" title="Editar" data-id="{{ calendario.id_fh }}">
+                        <a class="btn edit-calendario" title="Editar" data-id="{{ calendario.id_fh }}">
                           <i class="fas fa-edit"></i>
                         </a>
 
@@ -904,7 +904,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="selectfcCbn" class="form-label">Zona</label>
+            <label for="selectfcCbn" class="form-label">Cabaña</label>
             <select class="form-select" id="selectfcCbn" name="selectfcCbn">
               {% for cabana in cabanas %}
               <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
@@ -922,6 +922,49 @@
   </div>
 </div>
 
+<!-- Modal Actualizar calendario -->
+<div class="modal fade " id="modalActCalendario" tabindex="-1" aria-labelledby="modalActCalendarioLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalActCalendarioLabel">Modificar Cabaña</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para agregar fecha -->
+        <form method="POST" action="{{ url_for('modificar_fecha') }}">
+
+          <input type="hidden" id="id_fc_act" name="id_fc_act">
+
+          <div class="mb-3">
+            <label for="Actlblfecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="Actlblfecha" name="Actlblfecha" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="ActlblHora" class="form-label">Hora</label>
+            <input type="time" class="form-control" id="ActlblHora" name="ActlblHora" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="ActselectfcCbn" class="form-label">Cabaña</label>
+            <select class="form-select" id="ActselectfcCbn" name="ActselectfcCbn">
+              {% for cabana in cabanas %}
+              <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

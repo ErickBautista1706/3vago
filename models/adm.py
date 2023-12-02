@@ -328,5 +328,33 @@ class Admin:
             print(f"Error al insertar cabaña: {e}")
             return False
         
-    
+    def actualizar_fecha(id_fh, dia_disp, hora_disp, id_cbn):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Actualizar el usuario en la base de datos
+            query = text("""
+                UPDATE fechas
+                SET id_fh = :id_fh, dia_disp = :dia_disp, hora_disp = :hora_disp, id_cbn = :id_cbn
+                WHERE id_fh = :id_fh
+            """)
+
+            conn.execute(query, {
+                'id_fh': id_fh,
+                'dia_disp': dia_disp,
+                'hora_disp': hora_disp,
+                'id_cbn': id_cbn
+            })
+
+            conn.commit()
+
+            conn.close()
+
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al actualizar cabaña: {e}")
+            return False
     

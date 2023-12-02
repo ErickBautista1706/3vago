@@ -293,6 +293,29 @@ def agregar_fecha():
     else:
         return redirect(url_for("admin"))
 
+@app.route("/modificar_fecha", methods=["POST"])
+def modificar_fecha():
+    if request.method == "POST":
+
+        id = request.form.get("id_fc_act")
+        dia = request.form.get("Actlblfecha")
+        hora = request.form.get("ActlblHora")
+        id_fc_cabana = request.form.get("ActselectfcCbn")
+
+        resultado = Admin.actualizar_fecha(id, dia, hora, id_fc_cabana)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
+
+@app.route('/get_fecha_info/<int:id_fecha>', methods=['GET'])
+def obtener_fecha_info(id_fecha):
+    datos_fecha = GetInfos.obtener_info_fecha(id_fecha)
+    print(datos_fecha)
+    return jsonify({'success': True, 'fecha': datos_fecha})
 
 
 @app.route('/reservations_chart/<int:month>')

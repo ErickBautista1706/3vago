@@ -70,4 +70,4 @@ class ActualizarCabanaThread(threading.Thread):
         self.id_zn_cabana = id_zn_cabana
         
     def run(self):
-        resultado = Admin.insertar_zona(self.id_cbn, self.nombre_cabana, self.ubicacion_cabana, self.capacidad_cabana, self.id_zn_cabana)
+        resultado = Admin.actualizar_cabana(self.id_cbn, self.nombre_cabana, self.ubicacion_cabana, self.capacidad_cabana, self.id_zn_cabana)
