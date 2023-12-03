@@ -113,7 +113,8 @@ class GetInfos:
             query = text("""
                 SELECT fechas.id_fh, cabanas.id_cbn
                 FROM fechas
-                JOIN cabanas ON fechas.id_cbn = cabanas.id_cbn;
+                JOIN cabanas ON fechas.id_cbn = cabanas.id_cbn
+                WHERE id_fh = :id_fecha
             """)
 
             result = conn.execute(query, {'id_fecha': id_fecha})

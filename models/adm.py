@@ -375,3 +375,19 @@ class Admin:
             print(f"Error al actualizar cabaña: {e}")
             return False
     
+    def eliminar_fecha(id_fh):
+        try:
+            db = Database()
+            conn = db.engine.connect()  
+            
+            query = text("DELETE FROM fechas WHERE id_fh = :id_fh")
+            conn.execute(query, {"id_fh": id_fh})
+
+            conn.commit()
+            conn.close()
+            
+            return True
+
+        except Exception as e:
+            print(f"Error al eliminar zona: {e}")
+            return False

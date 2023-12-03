@@ -92,6 +92,24 @@ $(document).ready(function() {
         var id = $(this).data("id");
         get_data_calendario(id);
     });
+
+    $(".del-calendario").click(function(){
+        var id = $(this).data("id");
+        console.log("Obtuve el id:", id);
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminar_calendario(id);
+            }
+        });
+    });
    
 });
 
@@ -304,6 +322,24 @@ function get_data_calendario(id){
 
             } else {
                 console.error("Error al obtener información de la cabaña.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
+
+function eliminar_calendario(id){
+    $.ajax({
+        url: "/eliminar_calendario/" + id,
+        type: "GET",
+        success: function(response) {
+            if (response.success) {
+                
+                console.log("Fecha eliminada exitosamente.");
+            } else {
+                console.error("Error al eliminar una zona.");
             }
         },
         error: function(error) {

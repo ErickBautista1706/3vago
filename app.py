@@ -324,6 +324,13 @@ def obtener_fecha_info(id_fecha):
     print(datos_fecha)
     return jsonify({'success': True, 'fecha': datos_fecha})
 
+@app.route('/eliminar_calendario/<int:id_feha>')
+def eliminar_calendario(id_feha):
+    if Admin.eliminar_fecha(id_feha):
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
 
 @app.route('/reservations_chart/<int:month>')
 def reservations_chart(month):
