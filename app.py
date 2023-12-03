@@ -276,6 +276,13 @@ def modificar_cabana():
     else:
         return redirect(url_for("admin"))
 
+@app.route('/eliminar_cabanas/<int:id_cabana>')
+def eliminar_cabanas(id_cabana):
+    if Admin.eliminar_cabana(id_cabana):
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
 #Fechas
 @app.route("/agregar_fecha", methods=["POST"])
 def agregar_fecha():
