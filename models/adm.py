@@ -391,3 +391,19 @@ class Admin:
         except Exception as e:
             print(f"Error al eliminar zona: {e}")
             return False
+
+    #--------Reservaciones----------#
+
+    def obtener_reservaciones():
+        db = Database()
+        conn = db.engine.connect()
+        query = text("""
+            SELECT reservaciones.id_rsvcn, reservaciones.fecha_inicio, reservaciones.fecha_fin, cabanas.no_cbn
+            FROM reservaciones
+            JOIN cabanas ON reservaciones.id_cbn = cabanas.id_cbn;
+            """)
+        result = conn.execute(query)
+        fechas = result.fetchall()
+        conn.close()
+        return fechas
+    

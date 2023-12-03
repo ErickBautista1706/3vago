@@ -60,6 +60,7 @@ def admin():
     cabanas = Admin.obtener_cabanas()
     numcabanas = Admin.num_cabanas()
     fechas = Admin.obtener_calendarios()
+    reservaciones = Admin.obtener_reservaciones()
     num_usuarios = Dash.contar_usuarios()
     total_cabanas = Dash.obtener_total_cabanas()
     porcentaje = Dash.calcular_porcentaje(total_cabanas, 40)
@@ -67,7 +68,7 @@ def admin():
     
     return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, 
                            numcabanas=numcabanas, fechas=fechas, num_usuarios = num_usuarios, 
-                           total_cabanas=total_cabanas, porcentaje=porcentaje)
+                           total_cabanas=total_cabanas, porcentaje=porcentaje, reservaciones=reservaciones)
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
