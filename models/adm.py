@@ -464,3 +464,20 @@ class Admin:
             # Si ocurre un error, se captura y se devuelve False
             print(f"Error al actualizar cabaña: {e}")
             return False
+
+    def eliminar_reservacion(id_rsvcn):
+        try:
+            db = Database()
+            conn = db.engine.connect()  
+            
+            query = text("DELETE FROM reservaciones WHERE id_rsvcn = :id_rsvcn")
+            conn.execute(query, {"id_rsvcn": id_rsvcn})
+
+            conn.commit()
+            conn.close()
+            
+            return True
+
+        except Exception as e:
+            print(f"Error al eliminar zona: {e}")
+            return False

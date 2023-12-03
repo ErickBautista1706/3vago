@@ -115,6 +115,24 @@ $(document).ready(function() {
         var id = $(this).data("id");
         get_data_reservacion(id);
     });
+
+    $(".del-reservacion").click(function() {
+        var id = $(this).data("id");
+        console.log("Obtuve el id:", id);
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminar_reservacion(id);
+            }
+        });
+    });
 });
 
 
@@ -370,6 +388,23 @@ function get_data_reservacion(id){
 
             } else {
                 console.error("Error al obtener información de la cabaña.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
+
+function eliminar_reservacion(id){
+    $.ajax({
+        url: "/eliminar_reservacion/" + id,
+        type: "GET",
+        success: function(response) {
+            if (response.success) {                
+                console.log("reservacion eliminada exitosamente.");
+            } else {
+                console.error("reservacion al eliminar una zona.");
             }
         },
         error: function(error) {

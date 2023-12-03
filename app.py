@@ -373,6 +373,15 @@ def modificar_reservacion():
     else:
         return redirect(url_for("admin"))
 
+@app.route('/eliminar_reservacion/<int:id_reservacion>')
+def eliminar_reservacion(id_reservacion):
+    if Admin.eliminar_reservacion(id_reservacion):
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False})
+
+
+
 
 @app.route('/reservations_chart/<int:month>')
 def reservations_chart(month):
