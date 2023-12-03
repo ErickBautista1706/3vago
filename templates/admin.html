@@ -522,7 +522,7 @@
                         <a class="btn del-cabanas" title="Borrar" data-id="{{ reservacion.id_rsvcn }}">
                           <i class="fas fa-trash"></i>
                         </a>
-                        <a class="btn edit-cabana" title="Editar" data-id="{{ reservacion.id_rsvcn }}">
+                        <a class="btn edit-reservacion" title="Editar" data-id="{{ reservacion.id_rsvcn }}">
                           <i class="fas fa-edit"></i>
                         </a>
 
@@ -980,7 +980,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalActCalendarioLabel">Modificar Cabaña</h5>
+        <h5 class="modal-title" id="modalActCalendarioLabel">Modificar Fecha</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -1028,7 +1028,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Formulario para agregar cabana -->
+        <!-- Formulario para agregar reservaciones -->
         <form method="POST" action="{{ url_for('agregar_reservacion') }}">
           
           <div class="mb-3">
@@ -1059,6 +1059,52 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Actualizar reservaciones -->
+<div class="modal fade " id="modalActReservacion" tabindex="-1" aria-labelledby="modalActReservacionLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalActReservacionLabel">Modificar Reservacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para actualizar reservaciones -->
+        <form method="POST" action="{{ url_for('modificar_reservacion') }}">
+
+          <input type="hidden" id="id_re_act" name="id_re_act">
+          
+          <div class="mb-3">
+            <label for="selectResCbnModal" class="form-label">Cabaña</label>
+            <select class="form-select" id="selectResCbnModal" name="selectResCbnModal">
+              {% for cabana in cabanas %}
+              <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="fechaInicioModal" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fechaInicioModal" name="fechaInicioModal" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="fechaFinModal" class="form-label">Fecha de Fin</label>
+            <input type="date" class="form-control" id="fechaFinModal" name="fechaFinModal" required>
+          </div>          
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 

@@ -350,6 +350,29 @@ def agregar_reservacion():
     else:
         return redirect(url_for("admin"))
 
+@app.route('/get_reservacion_info/<int:id_reservacion>', methods=['GET'])
+def obtener_reservacion_info(id_reservacion):
+    datos_reservacion = GetInfos.obtener_info_reservacion(id_reservacion)
+    print(datos_reservacion)
+    return jsonify({'success': True, 'reservacion': datos_reservacion})
+
+@app.route("/modificar_reservacion", methods=["POST"])
+def modificar_reservacion():
+    if request.method == "POST":
+
+        id = request.form.get("id_re_act")
+        cabana = request.form.get("selectResCbnModal")
+        inicio = request.form.get("fechaInicioModal")
+        fin = request.form.get("fechaFinModal")
+        resultado = Admin.actualizar_reservacion(id, inicio, fin, cabana)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
+
 
 @app.route('/reservations_chart/<int:month>')
 def reservations_chart(month):

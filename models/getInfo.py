@@ -131,3 +131,29 @@ class GetInfos:
 
         except Exception as e:
             return [f"Error al obtener información de la zona por ID: {e}"]   
+
+    def obtener_info_reservacion(id_reservacion):
+        try:
+            db = Database()
+            conn = db.engine.connect()
+
+            query = text("""
+                SELECT id_rsvcn, id_cbn
+                FROM reservaciones 
+                WHERE id_rsvcn = :id_reservacion               
+            """)
+
+            result = conn.execute(query, {'id_reservacion': id_reservacion})
+            zona = result.fetchone()
+
+            conn.close()
+
+            if zona:
+                datos_zona = list(zona)
+            else:
+                datos_zona = ["Fecha no encontrada"]
+
+            return datos_zona
+
+        except Exception as e:
+            return [f"Error al obtener información de la zona por ID: {e}"]

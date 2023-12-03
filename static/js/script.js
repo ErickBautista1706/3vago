@@ -111,6 +111,10 @@ $(document).ready(function() {
         });
     });
    
+    $(".edit-reservacion").click(function() {
+        var id = $(this).data("id");
+        get_data_reservacion(id);
+    });
 });
 
 
@@ -340,6 +344,32 @@ function eliminar_calendario(id){
                 console.log("Fecha eliminada exitosamente.");
             } else {
                 console.error("Error al eliminar una zona.");
+            }
+        },
+        error: function(error) {
+            console.error("Error de solicitud:", error);
+        }
+    });
+}
+
+//Reservacion
+function get_data_reservacion(id){
+    $.ajax({
+        url: "/get_reservacion_info/" + id,
+        type: "GET",
+        success: function(response) {
+            console.log("Respuesta completa del servidor:", response);
+
+            if (response.success) {
+                var datos_reservacion = response.reservacion;
+                $("#id_re_act").val(datos_reservacion[0]);
+                $("#selectResCbnModal").val(datos_reservacion[1]);
+
+                // Mostrar el modal de actualización
+                $("#modalActReservacion").modal("show");
+
+            } else {
+                console.error("Error al obtener información de la cabaña.");
             }
         },
         error: function(error) {
