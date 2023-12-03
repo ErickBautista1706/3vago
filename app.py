@@ -332,6 +332,24 @@ def eliminar_calendario(id_feha):
     else:
         return jsonify({'success': False})
 
+#Reservaciones
+@app.route("/agregar_reservacion", methods=["POST"])
+def agregar_reservacion():
+    if request.method == "POST":
+        
+        cabana = request.form.get("selectResCbn")
+        inicio = request.form.get("fechaInicio")
+        fin = request.form.get("fechaFin")
+
+        resultado = Admin.insertar_reservacion(inicio, fin, cabana)
+
+        if resultado:
+            return redirect(url_for("admin"))
+        else:
+            return "Hubo un error al agregar la zona."
+    else:
+        return redirect(url_for("admin"))
+
 
 @app.route('/reservations_chart/<int:month>')
 def reservations_chart(month):

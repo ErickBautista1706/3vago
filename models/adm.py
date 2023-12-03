@@ -407,3 +407,30 @@ class Admin:
         conn.close()
         return fechas
     
+    def insertar_reservacion(fecha_inicio, fecha_fin, id_cbn):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Insertar el nuevo usuario en la base de datos
+            query = text("""
+                INSERT INTO reservaciones (fecha_inicio, fecha_fin, id_cbn)
+                VALUES (:fecha_inicio, :fecha_fin, :id_cbn)
+            """)
+            
+            conn.execute(query, {
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin,
+                'id_cbn': id_cbn
+            })
+            
+            conn.commit()  
+
+            conn.close()
+            
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al insertar cabaña: {e}")
+            return False        

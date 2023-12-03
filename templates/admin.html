@@ -482,7 +482,7 @@
             </div>
           </div>
 
-          <div class="card">
+          <div class="card mt-3">
             <div class="card-header bg-light d-flex align-items-center justify-content-between">
               <div style="margin-top: 10px;">
                 <h4>Reservaciones</h4>
@@ -1018,7 +1018,47 @@
   </div>
 </div>
 
+<!-- Modal Agregar reservaciones -->
+<div class="modal fade " id="modalAgregarReservacion" tabindex="-1" aria-labelledby="modalAgregarReservacionLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAgregarReservacionLabel">Agregar Reservacion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para agregar cabana -->
+        <form method="POST" action="{{ url_for('agregar_reservacion') }}">
+          
+          <div class="mb-3">
+            <label for="selectResCbn" class="form-label">Cabaña</label>
+            <select class="form-select" id="selectResCbn" name="selectResCbn">
+              {% for cabana in cabanas %}
+              <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
+          <div class="mb-3">
+            <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="fechaFin" class="form-label">Fecha de Fin</label>
+            <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
+          </div>          
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="agregar">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
