@@ -73,25 +73,27 @@ class ActualizarCabanaThread(threading.Thread):
         resultado = Admin.actualizar_cabana(self.id_cbn, self.nombre_cabana, self.ubicacion_cabana, self.capacidad_cabana, self.id_zn_cabana)
         
 class AgregarFechaThread(threading.Thread):
-    def __init__(self, dia, hora, id_fc_cabana):
+    def __init__(self, dia, hora, id_fc_cabana, disponible):
         super(AgregarFechaThread, self).__init__()
         self.dia = dia
         self.hora = hora
         self.id_fc_cabana = id_fc_cabana
+        self.disponible = disponible
         
     def run(self):
-        resultado = Admin.insertar_fecha(self.dia, self.hora, self.id_fc_cabana)
+        resultado = Admin.insertar_fecha(self.dia, self.hora, self.id_fc_cabana, self.disponible)
         
 class ModificarFechaThread(threading.Thread):
-    def __init__(self, id, dia, hora, id_fc_cabana):
+    def __init__(self, id, dia, hora, id_fc_cabana, disponible):
         super(ModificarFechaThread, self).__init__()
         self.id = id
         self.dia = dia
         self.hora = hora
         self.id_fc_cabana = id_fc_cabana
+        self.disponible = disponible
         
     def run(self):
-        resultado = Admin.actualizar_fecha(self.id, self.dia, self.hora, self.id_fc_cabana) 
+        resultado = Admin.actualizar_fecha(self.id, self.dia, self.hora, self.id_fc_cabana, self.disponible) 
         
 class CrearReservacionThread(threading.Thread):
     def __init__(self, inicio, fin, cabana):

@@ -290,10 +290,16 @@ def agregar_fecha():
     if request.method == "POST":
         dia = request.form.get("lblfecha")
         hora = request.form.get("lblHora")
-        id_fc_cabana = request.form.get("selectfcCbn")
+        id_fc_cabana = request.form.get("selectfcCbn")                
+        disponible = request.form.get("selectEstCbn")
 
+        if disponible == "reservado":
+            disponible_str = '0' 
+        else:
+            disponible_str = '1' 
+        
         with lock:
-            hilo = AgregarFechaThread(dia, hora, id_fc_cabana)
+            hilo = AgregarFechaThread(dia, hora, id_fc_cabana, disponible_str)
             hilo.start()
             hilo.join()
             #resultado = Admin.insertar_fecha(dia, hora, id_fc_cabana)
@@ -313,9 +319,16 @@ def modificar_fecha():
         dia = request.form.get("Actlblfecha")
         hora = request.form.get("ActlblHora")
         id_fc_cabana = request.form.get("ActselectfcCbn")
+        disponible = request.form.get("selectEstCbn")
+
+        if disponible == "reservado":
+            disponible_str = '0' 
+        else:
+            disponible_str = '1' 
+
 
         with lock:
-            hilo = ModificarFechaThread(id, dia, hora, id_fc_cabana)
+            hilo = ModificarFechaThread(id, dia, hora, id_fc_cabana, disponible_str)
             hilo.start()
             hilo.join()
             #resultado = Admin.actualizar_fecha(id, dia, hora, id_fc_cabana)

@@ -77,38 +77,39 @@
 
     <div class="row">
       <div class="col-12">
-         <div class="card">
-            <div class="card-header">
-               <div class="row flex-between-center">
-                  <div class="col-auto">
-                     <h6 class="mb-0">Reservations Chart</h6>
-                  </div>
-                  <div class="col-auto d-flex">
-                     <select id="select-month" class="form-select form-select-sm select-month me-2">
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                     </select>
-                     <button id="update-chart" class="btn btn-primary btn-sm" onclick="obtenerDatosYActualizarGrafico()">Update Chart</button>
-                  </div>
-               </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="row flex-between-center">
+              <div class="col-auto">
+                <h6 class="mb-0">Reservations Chart</h6>
+              </div>
+              <div class="col-auto d-flex">
+                <select id="select-month" class="form-select form-select-sm select-month me-2">
+                  <option value="1">Enero</option>
+                  <option value="2">Febrero</option>
+                  <option value="3">Marzo</option>
+                  <option value="4">Abril</option>
+                  <option value="5">Mayo</option>
+                  <option value="6">Junio</option>
+                  <option value="7">Julio</option>
+                  <option value="8">Agosto</option>
+                  <option value="9">Septiembre</option>
+                  <option value="10">Octubre</option>
+                  <option value="11">Noviembre</option>
+                  <option value="12">Diciembre</option>
+                </select>
+                <button id="update-chart" class="btn btn-primary btn-sm"
+                  onclick="obtenerDatosYActualizarGrafico()">Update Chart</button>
+              </div>
             </div>
-            <div class="card-body">
-              <canvas class="max-w-100" id="chartjs-line-chart"></canvas>
-            </div>
-         </div>
+          </div>
+          <div class="card-body">
+            <canvas class="max-w-100" id="chartjs-line-chart"></canvas>
+          </div>
+        </div>
       </div>
-   </div>
-   
+    </div>
+
 
     <br><br>
 
@@ -117,42 +118,42 @@
         <div class="row g-3">
           <div class="col-md-4 col-xxl-12">
             <div class="card h-100">
-                <div class="card-body">
-                    <div class="row flex-between-center g-0">
-                        <div class="col-6 d-lg-block flex-between-center">
-                            <h6 class="mb-2 text-900">Total usuarios</h6>
-                            <h4 class="fs-3 fw-normal text-700 mb-0">{{ num_usuarios }}</h4>
-                        </div>
-                        <div class="col-auto h-100">
-                            <div style="height:50px;min-width:80px;"
-                                data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>        
-        <div class="col-md-4 col-xxl-12">
-          <div class="card h-100">
               <div class="card-body">
-                  <div class="row flex-between-center">
-                      <div class="col d-md-flex d-lg-block flex-between-center">
-                          <h6 class="mb-md-0 mb-lg-2">Total Cabañas</h6>
-                          <span class="badge rounded-pill badge-soft-success"><span
-                                  class="fas fa-caret-up"></span> {{ porcentaje }}%</span>
-                      </div>
-                      <div class="col-auto">
-                          <h4 class="fs-3 fw-normal text-700"
-                              data-countup='{"endValue":{{ total_cabanas }}, "decimalPlaces":0, "suffix":"", "prefix":""}'>
-                              
-                          </h4>
-                      </div>
+                <div class="row flex-between-center g-0">
+                  <div class="col-6 d-lg-block flex-between-center">
+                    <h6 class="mb-2 text-900">Total usuarios</h6>
+                    <h4 class="fs-3 fw-normal text-700 mb-0">{{ num_usuarios }}</h4>
                   </div>
+                  <div class="col-auto h-100">
+                    <div style="height:50px;min-width:80px;"
+                      data-echarts='{"xAxis":{"show":false,"boundaryGap":false},"series":[{"data":[3,7,6,8,5,12,11],"type":"line","symbol":"none"}],"grid":{"right":"0px","left":"0px","bottom":"0px","top":"0px"}}'>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-      </div>
-      
-      
+          <div class="col-md-4 col-xxl-12">
+            <div class="card h-100">
+              <div class="card-body">
+                <div class="row flex-between-center">
+                  <div class="col d-md-flex d-lg-block flex-between-center">
+                    <h6 class="mb-md-0 mb-lg-2">Total Cabañas</h6>
+                    <span class="badge rounded-pill badge-soft-success"><span class="fas fa-caret-up"></span> {{
+                      porcentaje }}%</span>
+                  </div>
+                  <div class="col-auto">
+                    <h4 class="fs-3 fw-normal text-700"
+                      data-countup='{"endValue":{{ total_cabanas }}, "decimalPlaces":0, "suffix":"", "prefix":""}'>
+
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <div class="col-md-4 col-xxl-12">
             <div class="card h-100">
               <div class="card-body">
@@ -178,55 +179,60 @@
     <div class="row">
       <div class="col">
         <div class="card">
-            <div class="card-header d-flex flex-between-center  py-2">
-                <h6 class="mb-0">Usurios en red</h6>
+          <div class="card-header d-flex flex-between-center  py-2">
+            <h6 class="mb-0">Usurios en red</h6>
+          </div>
+          <div class="card-body py-2" id="tableExample"
+            data-list='{"valueNames":["name","email","rol"],"page":5,"pagination":true}'>
+            <div class="table-responsive scrollbar">
+              <table class="table table-bordered table-striped fs--1 mb-0">
+                <thead class="bg-200 text-900">
+                  <tr>
+                    <th class="sort" data-sort="name">Nombre</th>
+                    <th class="sort" data-sort="email">Email</th>
+                    <th class="sort" data-sort="rol">Rol</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  {% for usuario in usuarios %}
+                  <tr>
+                    <td class="name">{{ usuario.nombre }}</td>
+                    <td class="email">{{ usuario.email }}</td>
+                    <td class="rol">
+                      <span
+                        class="badge badge rounded-pill d-block p-2 {% if usuario.tipo_usr == 'Administrador' %}badge-soft-success{% else %}badge-soft-primary{% endif %}">
+                        {{ usuario.tipo_usr }}
+                        <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+                      </span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
-            <div class="card-body py-2" id="tableExample" data-list='{"valueNames":["name","email","rol"],"page":5,"pagination":true}'>
-                <div class="table-responsive scrollbar">
-                    <table class="table table-bordered table-striped fs--1 mb-0">
-                        <thead class="bg-200 text-900">
-                            <tr>
-                                <th class="sort" data-sort="name">Nombre</th>
-                                <th class="sort" data-sort="email">Email</th>
-                                <th class="sort" data-sort="rol">Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody class="list">
-                          {% for usuario in usuarios %}
-                          <tr>
-                              <td class="name">{{ usuario.nombre }}</td>
-                              <td class="email">{{ usuario.email }}</td>
-                              <td class="rol">
-                                <span
-                                  class="badge badge rounded-pill d-block p-2 {% if usuario.tipo_usr == 'Administrador' %}badge-soft-success{% else %}badge-soft-primary{% endif %}">
-                                  {{ usuario.tipo_usr }}
-                                  <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
-                                </span>
-                              </td>
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row align-items-center mt-3">
-                    <div class="pagination d-none"></div>
-                    <div class="col">
-                        <p class="mb-0 fs--1">
-                            <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
-                            <span class="d-none d-sm-inline-block"> &mdash; </span>
-                            <a class="fw-semi-bold" href="#!" data-list-view="*">Ver más<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                            <a class="fw-semi-bold d-none" href="#!" data-list-view="less">Ver menos<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </p>
-                    </div>
-                    <div class="col-auto d-flex">
-                        <button class="btn btn-sm btn-primary" type="button" data-list-pagination="prev"><span>Anterior</span></button>
-                        <button class="btn btn-sm btn-primary px-4 ms-2" type="button" data-list-pagination="next"><span>Siguiente</span></button>
-                    </div>
-                </div>
+            <div class="row align-items-center mt-3">
+              <div class="pagination d-none"></div>
+              <div class="col">
+                <p class="mb-0 fs--1">
+                  <span class="d-none d-sm-inline-block" data-list-info="data-list-info"></span>
+                  <span class="d-none d-sm-inline-block"> &mdash; </span>
+                  <a class="fw-semi-bold" href="#!" data-list-view="*">Ver más<span class="fas fa-angle-right ms-1"
+                      data-fa-transform="down-1"></span></a>
+                  <a class="fw-semi-bold d-none" href="#!" data-list-view="less">Ver menos<span
+                      class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                </p>
+              </div>
+              <div class="col-auto d-flex">
+                <button class="btn btn-sm btn-primary" type="button"
+                  data-list-pagination="prev"><span>Anterior</span></button>
+                <button class="btn btn-sm btn-primary px-4 ms-2" type="button"
+                  data-list-pagination="next"><span>Siguiente</span></button>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    
+      </div>
+
 
       <div class="col">
         <div class="card h-100">
@@ -443,7 +449,7 @@
             </div>
 
             <div class="card-body">
-              <div class="table-responsive scrollbar">
+              <div class="table-responsive scrollbar" style="max-height: 21rem;">
                 <table class="table table-hover table-striped overflow-hidden">
                   <thead>
                     <tr>
@@ -496,7 +502,7 @@
             </div>
 
             <div class="card-body">
-              <div class="table-responsive scrollbar">
+              <div class="table-responsive scrollbar" style="max-height: 21rem;">
                 <table class="table table-hover table-striped overflow-hidden">
                   <thead>
                     <tr>
@@ -579,13 +585,13 @@
             </div>
 
             <div class="card-body">
-              <div class="table-responsive scrollbar">
+              <div class="table-responsive scrollbar" style="max-height: 35rem;">
                 <table class="table table-hover table-striped overflow-hidden">
                   <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Dia</th>
                       <th>Cabaña</th>
+                      <th>Dia</th>
+                      <th>Estado</th>
                       <th class="text-end" scope="col">Acción</th>
                     </tr>
                   </thead>
@@ -594,11 +600,17 @@
                     <tr class="align-middle">
                       <td class="text-nowrap">
                         <div class="d-flex align-items-center">
-                          <div class="ms-2">{{ calendario.id_fh }}</div>
+                          <div class="ms-2">{{ calendario.no_cbn }}</div>
                         </div>
                       </td>
                       <td class="text-nowrap">{{ calendario.dia_disp }}</td>
-                      <td class="text-nowrap">{{ calendario.no_cbn }}</td>
+                      <td class="text-nowrap">
+                        {% if calendario.disponible == '1' %}
+                          Disponible
+                        {% else %}
+                          Reservado
+                        {% endif %}
+                      </td>
                       <td class="text-end">
                         <a class="btn del-calendario" title="Borrar" data-id="{{ calendario.id_fh }}">
                           <i class="fas fa-trash"></i>
@@ -885,8 +897,7 @@
 </div>
 
 <!-- Modal Actualizar cabana -->
-<div class="modal fade " id="modalModCabana" tabindex="-1" aria-labelledby="modalModCabanaLabel"
-  aria-hidden="true">
+<div class="modal fade " id="modalModCabana" tabindex="-1" aria-labelledby="modalModCabanaLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -908,7 +919,7 @@
             <label for="ActbcnCabana" class="form-label">Ubicación</label>
             <input type="text" class="form-control" id="ActbcnCabana" name="ActbcnCabana" required>
           </div>
-          
+
           <div class="mb-3">
             <label for="ActCpdCabana" class="form-label">Capacidad</label>
             <input type="number" class="form-control" id="ActCpdCabana" name="ActCpdCabana" required>
@@ -921,7 +932,7 @@
               <option value="{{ zona.id_zn }}">{{ zona.nombre_zn }}</option>
               {% endfor %}
             </select>
-          </div>          
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -961,6 +972,14 @@
               {% for cabana in cabanas %}
               <option value="{{ cabana.id_cbn }}">{{ cabana.no_cbn }}</option>
               {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="selectEstCbn" class="form-label">Estado</label>
+            <select class="form-select" id="selectEstCbn" name="selectEstCbn">
+              <option value="reservado">Reservado</option>
+              <option value="disponible">Disponible</option>
             </select>
           </div>
 
@@ -1008,6 +1027,14 @@
             </select>
           </div>
 
+          <div class="mb-3">
+            <label for="selectEstCbn" class="form-label">Estado</label>
+            <select class="form-select" id="selectEstCbn" name="selectEstCbn">
+              <option value="reservado">Reservado</option>
+              <option value="disponible">Disponible</option>
+            </select>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
@@ -1030,7 +1057,7 @@
       <div class="modal-body">
         <!-- Formulario para agregar reservaciones -->
         <form method="POST" action="{{ url_for('agregar_reservacion') }}">
-          
+
           <div class="mb-3">
             <label for="selectResCbn" class="form-label">Cabaña</label>
             <select class="form-select" id="selectResCbn" name="selectResCbn">
@@ -1048,7 +1075,7 @@
           <div class="mb-3">
             <label for="fechaFin" class="form-label">Fecha de Fin</label>
             <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
-          </div>          
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -1074,7 +1101,7 @@
         <form method="POST" action="{{ url_for('modificar_reservacion') }}">
 
           <input type="hidden" id="id_re_act" name="id_re_act">
-          
+
           <div class="mb-3">
             <label for="selectResCbnModal" class="form-label">Cabaña</label>
             <select class="form-select" id="selectResCbnModal" name="selectResCbnModal">
@@ -1092,7 +1119,7 @@
           <div class="mb-3">
             <label for="fechaFinModal" class="form-label">Fecha de Fin</label>
             <input type="date" class="form-control" id="fechaFinModal" name="fechaFinModal" required>
-          </div>          
+          </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -307,9 +307,10 @@ class Admin:
             db = Database()
             conn = db.engine.connect()
             query = text("""
-                SELECT fechas.id_fh, fechas.dia_disp, cabanas.no_cbn
+                SELECT fechas.id_fh, fechas.dia_disp, cabanas.no_cbn, fechas.disponible
                 FROM fechas
-                JOIN cabanas ON fechas.id_cbn = cabanas.id_cbn;
+                JOIN cabanas ON fechas.id_cbn = cabanas.id_cbn
+                ORDER BY fechas.id_fh ASC
                 """)
 
             result = conn.execute(query)
@@ -317,7 +318,7 @@ class Admin:
             conn.close()
             return fechas
     
-    def insertar_fecha(dia_disp, hora_disp, id_cbn):
+    def insertar_fecha(dia_disp, hora_disp, id_cbn, disponible):
         try:
             # Conectar a la base de datos
             db = Database()
@@ -325,14 +326,16 @@ class Admin:
 
             # Insertar el nuevo usuario en la base de datos
             query = text("""
-                INSERT INTO fechas (dia_disp, hora_disp, id_cbn)
-                VALUES (:dia_disp, :hora_disp, :id_cbn)
+                INSERT INTO fechas (dia_disp, hora_disp, id_cbn, disponible)
+                VALUES (:dia_disp, :hora_disp, :id_cbn, CAST(:disponible AS BIT))
             """)
+
             
             conn.execute(query, {
                 'dia_disp': dia_disp,
                 'hora_disp': hora_disp,
-                'id_cbn': id_cbn
+                'id_cbn': id_cbn,
+                'disponible': disponible
             })
             
             conn.commit()  
@@ -345,7 +348,7 @@ class Admin:
             print(f"Error al insertar cabaña: {e}")
             return False
         
-    def actualizar_fecha(id_fh, dia_disp, hora_disp, id_cbn):
+    def actualizar_fecha(id_fh, dia_disp, hora_disp, id_cbn, disponible):
         try:
             # Conectar a la base de datos
             db = Database()
@@ -354,7 +357,7 @@ class Admin:
             # Actualizar el usuario en la base de datos
             query = text("""
                 UPDATE fechas
-                SET id_fh = :id_fh, dia_disp = :dia_disp, hora_disp = :hora_disp, id_cbn = :id_cbn
+                SET id_fh = :id_fh, dia_disp = :dia_disp, hora_disp = :hora_disp, id_cbn = :id_cbn, disponible = CAST(:disponible AS BIT)
                 WHERE id_fh = :id_fh
             """)
 
@@ -362,7 +365,8 @@ class Admin:
                 'id_fh': id_fh,
                 'dia_disp': dia_disp,
                 'hora_disp': hora_disp,
-                'id_cbn': id_cbn
+                'id_cbn': id_cbn,
+                'disponible': disponible
             })
 
             conn.commit()
