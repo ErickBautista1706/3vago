@@ -410,7 +410,7 @@ class Admin:
         fechas = result.fetchall()
         conn.close()
         return fechas
-    
+     
     def insertar_reservacion(fecha_inicio, fecha_fin, id_cbn):
         try:
             # Conectar a la base de datos
@@ -423,10 +423,24 @@ class Admin:
                 VALUES (:fecha_inicio, :fecha_fin, :id_cbn)
             """)
             
+            # Marcar las fechas como no disponibles en la tabla fechas
             conn.execute(query, {
                 'fecha_inicio': fecha_inicio,
                 'fecha_fin': fecha_fin,
                 'id_cbn': id_cbn
+            })
+
+            query_update_fechas = text("""
+                UPDATE fechas
+                SET disponible = CAST(0 AS BIT)
+                WHERE id_cbn = :id_cbn AND dia_disp BETWEEN :fecha_inicio AND :fecha_fin
+            """)
+
+            # Ejecutar la consulta de actualización de fechas
+            conn.execute(query_update_fechas, {
+                'id_cbn': id_cbn,
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin
             })
             
             conn.commit()  
@@ -457,6 +471,19 @@ class Admin:
                 'fecha_inicio': fecha_inicio,
                 'fecha_fin': fecha_fin,
                 'id_cbn': id_cbn
+            })
+
+            query_update_fechas = text("""
+                UPDATE fechas
+                SET disponible = CAST(0 AS BIT)
+                WHERE id_cbn = :id_cbn AND dia_disp BETWEEN :fecha_inicio AND :fecha_fin
+            """)
+
+            # Ejecutar la consulta de actualización de fechas
+            conn.execute(query_update_fechas, {
+                'id_cbn': id_cbn,
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin
             })
 
             conn.commit()
