@@ -33,25 +33,43 @@ class Dash:
         porcentaje = (valor_actual / valor_total) * 100
         return round(porcentaje, 2)
 
-    def obtener_fechas(month):
+    def obtener_reservaciones_agrupadas():
         try:
             db = Database()
             conn = db.engine.connect()
             query = text("""
-                SELECT id_fh, TO_CHAR(dia_disp, 'YYYY-MM-DD') as fecha, TO_CHAR(hora_disp, 'HH24:MI:SS') as hora, id_cbn
-                FROM fechas
+                SELECT id_cbn, COUNT(*) as cantidad_reservaciones
+                FROM reservaciones
+                GROUP BY id_cbn
             """)
 
             result = conn.execute(query)
-            fechas_info = result.fetchall()
-
-            # Formatear fechas y horas
-            fechas_formateadas = [{'id_fh': row.id_fh, 'fecha': str(row.fecha), 'hora': str(row.hora), 'id_cbn': row.id_cbn} for row in fechas_info]
+            reservaciones_agrupadas = [{'id_cbn': row.id_cbn, 'cantidad_reservaciones': row.cantidad_reservaciones} for row in result.fetchall()]
 
             conn.close()
 
-            return fechas_formateadas
+            return reservaciones_agrupadas
 
         except Exception as e:
-            print(f"Error al obtener información de fechas: {e}")
+            print(f"Error al obtener información de reservaciones: {e}")
             return []
+
+    def contar_total_reservaciones():
+            try:
+                db = Database()
+                conn = db.engine.connect()
+                query = text("""
+                    SELECT COUNT(*) as total_reservaciones
+                    FROM reservaciones
+                """)
+
+                result = conn.execute(query)
+                total_reservaciones = result.scalar()
+                print(total_reservaciones)
+                conn.close()
+
+                return total_reservaciones
+
+            except Exception as e:
+                print(f"Error al contar reservaciones: {e}")
+                return 0

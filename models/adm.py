@@ -296,4 +296,170 @@ class Admin:
         except Exception as e:
             # Si ocurre un error, se captura y se devuelve False
             print(f"Error al insertar cabaña: {e}")
+<<<<<<< Updated upstream
             return False
+=======
+            return False
+        
+    def actualizar_fecha(id_fh, dia_disp, hora_disp, id_cbn):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Actualizar el usuario en la base de datos
+            query = text("""
+                UPDATE fechas
+                SET id_fh = :id_fh, dia_disp = :dia_disp, hora_disp = :hora_disp, id_cbn = :id_cbn
+                WHERE id_fh = :id_fh
+            """)
+
+            conn.execute(query, {
+                'id_fh': id_fh,
+                'dia_disp': dia_disp,
+                'hora_disp': hora_disp,
+                'id_cbn': id_cbn
+            })
+
+            conn.commit()
+
+            conn.close()
+
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al actualizar cabaña: {e}")
+            return False
+    
+    def eliminar_fecha(id_fh):
+        try:
+            db = Database()
+            conn = db.engine.connect()  
+            
+            query = text("DELETE FROM fechas WHERE id_fh = :id_fh")
+            conn.execute(query, {"id_fh": id_fh})
+
+            conn.commit()
+            conn.close()
+            
+            return True
+
+        except Exception as e:
+            print(f"Error al eliminar zona: {e}")
+            return False
+
+    #--------Reservaciones----------#
+
+    def obtener_reservaciones():
+        db = Database()
+        conn = db.engine.connect()
+        query = text("""
+            SELECT reservaciones.id_rsvcn, reservaciones.fecha_inicio, reservaciones.fecha_fin, cabanas.no_cbn
+            FROM reservaciones
+            JOIN cabanas ON reservaciones.id_cbn = cabanas.id_cbn;
+            """)
+        result = conn.execute(query)
+        fechas = result.fetchall()
+        conn.close()
+        return fechas
+    
+    def insertar_reservacion(fecha_inicio, fecha_fin, id_cbn):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Verificar si hay conflictos de fechas para la misma cabaña
+            query_conflict = text("""
+                SELECT COUNT(*)
+                FROM reservaciones
+                WHERE id_cbn = :id_cbn
+                    AND ((:fecha_inicio BETWEEN fecha_inicio AND fecha_fin)
+                        OR (:fecha_fin BETWEEN fecha_inicio AND fecha_fin)
+                        OR (fecha_inicio BETWEEN :fecha_inicio AND :fecha_fin)
+                        OR (fecha_fin BETWEEN :fecha_inicio AND :fecha_fin))
+            """)
+            
+            result_conflict = conn.execute(query_conflict, {
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin,
+                'id_cbn': id_cbn
+            })
+
+            # Verifica si hay algún conflicto
+            if result_conflict.scalar() > 0:
+                # Conflicto de fechas para la misma cabaña
+                print("Conflicto de fechas para la misma cabaña")
+                return False
+
+            # Insertar el nuevo usuario en la base de datos
+            query_insert = text("""
+                INSERT INTO reservaciones (fecha_inicio, fecha_fin, id_cbn)
+                VALUES (:fecha_inicio, :fecha_fin, :id_cbn)
+            """)
+
+            conn.execute(query_insert, {
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin,
+                'id_cbn': id_cbn
+            })
+
+            conn.commit()  
+
+            conn.close()
+
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al insertar cabaña: {e}")
+            return False
+
+
+
+    def actualizar_reservacion(id_rsvcn, fecha_inicio, fecha_fin, id_cbn):
+        try:
+            # Conectar a la base de datos
+            db = Database()
+            conn = db.engine.connect()
+
+            # Actualizar el usuario en la base de datos
+            query = text("""
+                UPDATE reservaciones
+                SET id_rsvcn = :id_rsvcn, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, id_cbn = :id_cbn
+                WHERE id_rsvcn = :id_rsvcn
+            """)
+
+            conn.execute(query, {
+                'id_rsvcn': id_rsvcn,
+                'fecha_inicio': fecha_inicio,
+                'fecha_fin': fecha_fin,
+                'id_cbn': id_cbn
+            })
+
+            conn.commit()
+
+            conn.close()
+
+            return True
+        except Exception as e:
+            # Si ocurre un error, se captura y se devuelve False
+            print(f"Error al actualizar cabaña: {e}")
+            return False
+
+    def eliminar_reservacion(id_rsvcn):
+        try:
+            db = Database()
+            conn = db.engine.connect()  
+            
+            query = text("DELETE FROM reservaciones WHERE id_rsvcn = :id_rsvcn")
+            conn.execute(query, {"id_rsvcn": id_rsvcn})
+
+            conn.commit()
+            conn.close()
+            
+            return True
+
+        except Exception as e:
+            print(f"Error al eliminar zona: {e}")
+            return False
+>>>>>>> Stashed changes

@@ -25,6 +25,7 @@
 <script src="/static/dash/dash-js/countUp.umd.js"></script>
 <script src="/static/dash/dash-js/dayjs.min.js"></script>
 <script src="/static/js/dashboard.js"></script>
+<script src="/static/js/validaciones.js"></script>
 
 {% endblock %}
 
@@ -83,27 +84,10 @@
                   <div class="col-auto">
                      <h6 class="mb-0">Reservations Chart</h6>
                   </div>
-                  <div class="col-auto d-flex">
-                     <select id="select-month" class="form-select form-select-sm select-month me-2">
-                        <option value="1">Enero</option>
-                        <option value="2">Febrero</option>
-                        <option value="3">Marzo</option>
-                        <option value="4">Abril</option>
-                        <option value="5">Mayo</option>
-                        <option value="6">Junio</option>
-                        <option value="7">Julio</option>
-                        <option value="8">Agosto</option>
-                        <option value="9">Septiembre</option>
-                        <option value="10">Octubre</option>
-                        <option value="11">Noviembre</option>
-                        <option value="12">Diciembre</option>
-                     </select>
-                     <button id="update-chart" class="btn btn-primary btn-sm" onclick="obtenerDatosYActualizarGrafico()">Update Chart</button>
-                  </div>
                </div>
             </div>
             <div class="card-body">
-              <canvas class="max-w-100" id="chartjs-line-chart"></canvas>
+              <canvas class="max-w-100" id="chartjs-bar-chart"></canvas>
             </div>
          </div>
       </div>
@@ -158,12 +142,12 @@
               <div class="card-body">
                 <div class="row flex-between-center">
                   <div class="col d-md-flex d-lg-block flex-between-center">
-                    <h6 class="mb-md-0 mb-lg-2">Conversion</h6><span class="badge rounded-pill badge-soft-primary"><span
+                    <h6 class="mb-md-0 mb-lg-2">Reservaciones</h6><span class="badge rounded-pill badge-soft-primary"><span
                         class="fas fa-caret-up"></span> 29.4%</span>
                   </div>
                   <div class="col-auto">
                     <h4 class="fs-3 fw-normal text-primary"
-                      data-countup='{"endValue":28.5,"decimalPlaces":2,"suffix":"%"}'>0</h4>
+                      data-countup='{"endValue":{{ total_reservaciones }},"decimalPlaces":0,"suffix":""}'>0</h4>
                   </div>
                 </div>
               </div>
@@ -228,44 +212,7 @@
     </div>
     
 
-      <div class="col">
-        <div class="card h-100">
-          <div class="card-header bg-light d-flex flex-between-center py-2">
-            <h6 class="mb-0">Bandwidth Saved</h6>
-            <div class="dropdown font-sans-serif btn-reveal-trigger">
-              <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button"
-                id="dropdown-bandwidth-saved" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true"
-                aria-expanded="false"><span class="fas fa-ellipsis-h fs--2"></span></button>
-              <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-bandwidth-saved"><a
-                  class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-              </div>
-            </div>
-          </div>
-          <div class="card-body d-flex flex-center flex-column">
-            <!-- Find the JS file for the following chart at: src/js/charts/echarts/bandwidth-saved.js-->
-            <!-- If you are not using gulp based workflow, you can find the transpiled code at: public/assets/js/theme.js-->
-            <div class="echart-bandwidth-saved" data-echart-responsive="true"></div>
-            <div class="text-center mt-3">
-              <h6 class="fs-0 mb-1"><span class="fas fa-check text-success me-1"
-                  data-fa-transform="shrink-2"></span>35.75 GB saved</h6>
-              <p class="fs--1 mb-0">38.44 GB total bandwidth</p>
-            </div>
-          </div>
-          <div class="card-footer bg-light py-2">
-            <div class="row flex-between-center">
-              <div class="col-auto">
-                <select class="form-select form-select-sm">
-                  <option>Last 6 Months</option>
-                  <option>Last Year</option>
-                  <option>Last 2 Year</option>
-                </select>
-              </div>
-              <div class="col-auto"><a class="fs--1 font-sans-serif" href="#!">Help</a></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
 
     </div>
@@ -588,7 +535,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{ url_for('agregar_usuario') }}" class="row">
+        <form method="POST" action="{{ url_for('agregar_usuario') }}" class="row" onsubmit="return validar(1)">
           <div class="col-md-6">
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
@@ -629,7 +576,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary" name="agregar_usuario">Guardar</button>
+        <button type="submit" class="btn btn-primary" name="agregar_usuario" onclick="validar()">Guardar</button>
       </div>
       </form>
     </div>
@@ -702,7 +649,7 @@
       </div>
       <div class="modal-body">
         <!-- Formulario para agregar zona -->
-        <form method="POST" action="{{ url_for('agregar_zona') }}">
+        <form method="POST" action="{{ url_for('agregar_zona') }}" onsubmit="return validar(2)">
           <div class="mb-3">
             <label for="nombreZona" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
@@ -730,7 +677,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" name="agregarZona">Guardar</button>
+            <button type="submit" class="btn btn-primary" name="agregarZona" onclick="validar(2)">Guardar</button>
           </div>
         </form>
       </div>

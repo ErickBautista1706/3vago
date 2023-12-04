@@ -1,66 +1,48 @@
-// Función para obtener datos y actualizar el gráfico
-function obtenerDatosYActualizarGrafico() {
-    var selectedMonth = document.querySelector('#select-month').value;
+document.addEventListener("DOMContentLoaded", function () {
+    // Llama directamente a updateChart al cargar la página
+    updateChart();
+});
 
-    
-    fetch("/reservations_chart/" + selectedMonth)
+function updateChart() {
+    var canvas = document.querySelector('#chartjs-bar-chart');
+    Chart.getChart(canvas)?.destroy();
+
+    // Aquí puedes colocar la lógica para obtener los datos directamente sin el selector de mes
+    fetch("/reservations_chart")
         .then(response => response.json())
         .then(data => {
-            
             console.log("Datos obtenidos:", data);
+            var datosAgrupados = {};
 
-            
-            updateChart(data);
+            data.forEach(function (item) {
+                var id_cbn = item.id_cbn;
+                if (!datosAgrupados[id_cbn]) {
+                    datosAgrupados[id_cbn] = item.cantidad_reservaciones;
+                } else {
+                    datosAgrupados[id_cbn] += item.cantidad_reservaciones;
+                }
+            });
+
+            var id_cbn = Object.keys(datosAgrupados);
+            var cantidad_reservaciones = Object.values(datosAgrupados);
+
+            var ctx = canvas.getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: id_cbn,
+                    datasets: [{
+                        label: 'Reservations',
+                        data: cantidad_reservaciones,
+                        backgroundColor: 'rgb(75, 192, 192)',
+                    }]
+                },
+                options: {
+                    
+                }
+            });
         })
         .catch(error => {
             console.error("Error al obtener datos:", error);
         });
-}
-
-// Función para cargar el gráfico con datos
-function updateChart(data) {
-    
-    var canvas = document.querySelector('#chartjs-line-chart');
-
-    
-    Chart.getChart(canvas)?.destroy();
-
-    
-    var datosAgrupados = {};
-
-    
-    data.forEach(function (item) {
-        
-        var fechaSinHora = item.fecha;
-
-        
-        if (!datosAgrupados[fechaSinHora]) {
-            datosAgrupados[fechaSinHora] = 1; 
-        } else {
-            datosAgrupados[fechaSinHora]++; 
-        }
-    });
-
-    
-    var fechas = Object.keys(datosAgrupados);
-    var reservaciones = Object.values(datosAgrupados);
-
-    // Configurar y cargar el gráfico
-    var ctx = canvas.getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: fechas,
-            datasets: [{
-                label: 'Reservations',
-                data: reservaciones,
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            
-        }
-    });
 }

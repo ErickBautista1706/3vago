@@ -60,11 +60,16 @@ def admin():
     num_usuarios = Dash.contar_usuarios()
     total_cabanas = Dash.obtener_total_cabanas()
     porcentaje = Dash.calcular_porcentaje(total_cabanas, 40)
+    total_reservaciones = Dash.contar_total_reservaciones()
 
     
     return render_template('admin.html', usuarios=usuarios, zonas=zonas, users_info=users_info, cabanas=cabanas, 
                            numcabanas=numcabanas, fechas=fechas, num_usuarios = num_usuarios, 
+<<<<<<< Updated upstream
                            total_cabanas=total_cabanas, porcentaje=porcentaje)
+=======
+                           total_cabanas=total_cabanas, porcentaje=porcentaje, reservaciones=reservaciones, total_reservaciones=total_reservaciones)
+>>>>>>> Stashed changes
 
 @app.route("/agregar_usuario", methods=["POST"])
 def agregar_usuario():
@@ -89,7 +94,7 @@ def agregar_usuario():
 @app.route('/eliminar_usuario/<int:id_usuario>', methods=['GET'])
 def eliminar_usuario(id_usuario):
     if Admin.eliminar_usuario(id_usuario):
-        return jsonify({'success': True})
+        return redirect(url_for("admin"))
     else:
         return jsonify({'success': False})
     
@@ -144,7 +149,7 @@ def agregar_zona():
 @app.route('/eliminar_zona/<int:id_zona>', methods=['GET'])
 def eliminar_zona(id_zona):
     if Admin.eliminar_zona(id_zona):
-        return jsonify({'success': True})
+        return redirect(url_for("admin"))
     else:
         return jsonify({'success': False})
     
@@ -177,26 +182,26 @@ def generar_reporte():
     try:
         ruta_reporte_original = "./static/reportes/reporte No. 1.xlsx"
         
-        # Obtener datos de la tabla usuarios y zonas (utiliza tus funciones específicas)
+       
         datos_usuarios = LlenarReporte.tabla_usuarios()
         datos_zonas = LlenarReporte.tabla_zonas()
 
-        # Crear una instancia de la clase LlenarReporte
+       
         llenar_reporte = LlenarReporte(ruta_reporte_original)
 
-        # Llenar la hoja de usuarios
+       
         llenar_reporte.llenar_hoja_usuarios(datos_usuarios)
 
-        # Llenar la hoja de zonas
+       
         llenar_reporte.llenar_hoja_zonas(datos_zonas)
 
-        # Guardar el reporte
+       
         llenar_reporte.guardar_reporte()
 
-        # Crear una respuesta para el archivo
+        
         response = make_response(send_file(ruta_reporte_original, as_attachment=True, download_name="reporte_lleno.xlsx"))
         
-        # Configurar la respuesta para descargar automáticamente
+        
         response.headers["Content-Disposition"] = "attachment; filename=reporte_lleno.xlsx"
 
         return response
@@ -265,10 +270,10 @@ def agregar_fecha():
 
 
 
-@app.route('/reservations_chart/<int:month>')
-def reservations_chart(month):
+@app.route('/reservations_chart')
+def reservations_chart():
     # Supongamos que tienes una función para obtener las reservaciones para un mes específico
-    reservations_data = Dash.obtener_fechas(month)
+    reservations_data = Dash.obtener_reservaciones_agrupadas()
 
     # Devuelve los datos como un objeto JSON
     return jsonify(reservations_data)
