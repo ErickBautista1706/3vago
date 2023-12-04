@@ -1,5 +1,5 @@
 from flask import Flask, url_for, render_template, request, redirect, jsonify, request, send_file, make_response
-from models.hilos import ActualizarCabanaThread, ActualizarUsuarioThread, ActualizarZonaThread, AgregarCabanaThread, AgregarUsuarioThread, AgregarZonaThread
+from models.hilos import ActualizarCabanaThread, ActualizarUsuarioThread, ActualizarZonaThread, AgregarCabanaThread, AgregarFechaThread, AgregarUsuarioThread, AgregarZonaThread, CrearReservacionThread, ModificarFechaThread, ModificarReservacionThread
 from models.login import Login
 from models.adm import Admin
 from datetime import datetime
@@ -292,12 +292,16 @@ def agregar_fecha():
         hora = request.form.get("lblHora")
         id_fc_cabana = request.form.get("selectfcCbn")
 
-        resultado = Admin.insertar_fecha(dia, hora, id_fc_cabana)
+        with lock:
+            hilo = AgregarFechaThread(dia, hora, id_fc_cabana)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.insertar_fecha(dia, hora, id_fc_cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -310,12 +314,16 @@ def modificar_fecha():
         hora = request.form.get("ActlblHora")
         id_fc_cabana = request.form.get("ActselectfcCbn")
 
-        resultado = Admin.actualizar_fecha(id, dia, hora, id_fc_cabana)
+        with lock:
+            hilo = ModificarFechaThread(id, dia, hora, id_fc_cabana)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.actualizar_fecha(id, dia, hora, id_fc_cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -341,12 +349,16 @@ def agregar_reservacion():
         inicio = request.form.get("fechaInicio")
         fin = request.form.get("fechaFin")
 
-        resultado = Admin.insertar_reservacion(inicio, fin, cabana)
+        with lock:
+            hilo = CrearReservacionThread(inicio, fin, cabana)
+            hilo.start()
+            hilo.join()
+            #resultado = Admin.insertar_reservacion(inicio, fin, cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
@@ -364,12 +376,18 @@ def modificar_reservacion():
         cabana = request.form.get("selectResCbnModal")
         inicio = request.form.get("fechaInicioModal")
         fin = request.form.get("fechaFinModal")
-        resultado = Admin.actualizar_reservacion(id, inicio, fin, cabana)
+        
+        with lock:
+            hilo = ModificarReservacionThread(id, inicio, fin, cabana)
+            hilo.start()
+            hilo.join()
+            
+            #resultado = Admin.actualizar_reservacion(id, inicio, fin, cabana)
 
-        if resultado:
-            return redirect(url_for("admin"))
-        else:
-            return "Hubo un error al agregar la zona."
+            if not hilo.is_alive():
+                return redirect(url_for("admin"))
+            else:
+                return "Hubo un error al agregar la zona."
     else:
         return redirect(url_for("admin"))
 
