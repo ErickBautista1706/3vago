@@ -198,20 +198,22 @@ def actualizar_zona():
 @app.route('/generar_reporte', methods=['GET'])
 def generar_reporte():
     try:
-        ruta_reporte_original = "./static/reportes/reporte No. 1.xlsx"
+        ruta_reporte_original = "./static/reportes/Plantilla_reporte.xlsx"
         
-        # Obtener datos de la tabla usuarios y zonas (utiliza tus funciones específicas)
         datos_usuarios = LlenarReporte.tabla_usuarios()
         datos_zonas = LlenarReporte.tabla_zonas()
+        datos_cabanas_zonas = LlenarReporte.obtener_cabanas_por_zonas()
+        datos_usurs_total = LlenarReporte.contar_registros_usuarios()
+        datos_zonas_total = LlenarReporte.contar_registros_zonas()
+        datos_cabanas_total = LlenarReporte.contar_registros_cabanas()
+        datos_fechasdis_total = LlenarReporte.contar_fechas_disponibles()
+        datos_fechasnodis_total = LlenarReporte.contar_fechas_no_disponibles()
 
-        # Crear una instancia de la clase LlenarReporte
         llenar_reporte = LlenarReporte(ruta_reporte_original)
-
-        # Llenar la hoja de usuarios
         llenar_reporte.llenar_hoja_usuarios(datos_usuarios)
-
-        # Llenar la hoja de zonas
         llenar_reporte.llenar_hoja_zonas(datos_zonas)
+        llenar_reporte.llenar_hoja_cabanas_por_zonas(datos_cabanas_zonas)
+        llenar_reporte.llenar_hoja_resumen(datos_usurs_total, datos_zonas_total, datos_cabanas_total, datos_fechasdis_total, datos_fechasnodis_total)
 
         # Guardar el reporte
         llenar_reporte.guardar_reporte()
